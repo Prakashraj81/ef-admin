@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "strictNullChecks": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+, "components/Home/testimonials.js" , "components/Home/testimonials.js", "components/Home/our-company.js", "components/Home/our-services.js", "components/Home/top-banner.jsx", "pages/posts/[slug].jsx", "pages/index-dummy.jsx", "pages/_app.jsx", "cocomponents/Home/contact.js", "components/Home/courses.js", "components/animation/ScrollAnimationWrapper.jsx", "components/Home/top-banner.js", "components/Menu/navbar.js", "components/container/PageContainer.jsx", "pages/admin/auth/login.jsx", "pages/admin/auth/register.jsx" ],
+  "exclude": [
+    "node_modules"
+  ]
+}
