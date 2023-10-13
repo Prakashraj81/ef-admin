@@ -1,8 +1,8 @@
 "use strict";
 (() => {
 var exports = {};
-exports.id = 89;
-exports.ids = [89];
+exports.id = 5089;
+exports.ids = [5089];
 exports.modules = {
 
 /***/ 5142:
@@ -26,34 +26,24 @@ module.exports = require("mssql");
 
 /***/ }),
 
-/***/ 19:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ 1738:
+/***/ ((module) => {
 
+module.exports = require("multer");
 
-let express = __webpack_require__(6860);
-let sql = __webpack_require__(9424);
-let dotenv = __webpack_require__(5142);
-let router = express.Router();
-dotenv.config();
-let app = express();
-let config = {
-    user: process.env.USER,
-    password: process.env.PASSWORD,
-    server: process.env.SERVER,
-    database: process.env.DATABASE,
-    options: {
-        encrypt: true,
-        trustServerCertificate: true
-    }
-};
-app.listen(4000, ()=>{
-    console.log("API server is listening on port 3000");
-});
-module.exports = {
-    sql,
-    config
-};
+/***/ }),
 
+/***/ 7147:
+/***/ ((module) => {
+
+module.exports = require("fs");
+
+/***/ }),
+
+/***/ 1017:
+/***/ ((module) => {
+
+module.exports = require("path");
 
 /***/ }),
 
@@ -64,7 +54,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(19);
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5038);
 /* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_config__WEBPACK_IMPORTED_MODULE_0__);
 
 //User create api
@@ -118,7 +108,7 @@ __webpack_require__.r(__webpack_exports__);
 var __webpack_require__ = require("../../../webpack-api-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = (__webpack_exec__(6628));
+var __webpack_exports__ = __webpack_require__.X(0, [19], () => (__webpack_exec__(6628)));
 module.exports = __webpack_exports__;
 
 })();

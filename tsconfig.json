@@ -31,7 +31,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-, "components/Home/testimonials.js" , "components/Home/testimonials.js", "components/Home/our-company.js", "components/Home/our-services.js", "components/Home/top-banner.jsx", "pages/posts/[slug].jsx", "pages/index-dummy.jsx", "pages/_app.jsx", "cocomponents/Home/contact.js", "components/Home/courses.js", "components/animation/ScrollAnimationWrapper.jsx", "components/Home/top-banner.js", "components/Menu/navbar.js", "components/container/PageContainer.jsx", "pages/admin/auth/login.jsx", "pages/admin/auth/register.jsx" ],
+, "components/Home/testimonials.js" , "components/Home/testimonials.js", "components/Home/our-company.js", "components/Home/our-services.js", "components/Home/top-banner.jsx", "pages/posts/[slug].jsx", "pages/index-dummy.jsx", "pages/_app.jsx", "cocomponents/Home/contact.js", "components/Home/courses.js", "components/animation/ScrollAnimationWrapper.jsx", "components/Home/top-banner.js", "components/Menu/navbar.js", "components/container/PageContainer.jsx", "pages/admin/auth/login.jsx", "pages/admin/auth/register.jsx", "pages/api/post/insert.js" ],
   "exclude": [
     "node_modules"
   ]

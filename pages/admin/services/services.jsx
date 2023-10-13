@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, UseEffect} from "react";
 import Image from "next/image";
 import FullLayout from "../../../components/layouts/full/FullLayout";
 import {
@@ -14,9 +14,15 @@ import {
   TablePagination,
   Tooltip,
 } from "@mui/material";
+import DeleteModal from "../../../components/modal/delete-modal";
+import { IconX } from '@tabler/icons-react';
+import { styled } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
 import DashboardCard from "../../../components/shared/DashboardCard";
 import { IconEdit, IconCirclePlus, IconTrashX } from "@tabler/icons-react";
 import theme from "../../../components/shared/theme";
+import SuccessAlert from "../../../components/alert/success-alert";
+import AddService from "./add-service";
 
 const products = [
   {
@@ -45,12 +51,70 @@ const products = [
 export default function Blog() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  let [EditModalOpen, setEditModalOpen] = React.useState(false);
+  let [ModalId, setModalId] = useState(0);
+  let [DeleteModalOpen, setDeleteModalOpen] = React.useState(false);
+  let [SuccessMsg, setSuccessMsg] = React.useState(false);
+
+
+  const EditModalFunction = () => {
+    setEditModalOpen(true);
+  };
+  const CloseModalFunction = () => {
+    setEditModalOpen(false);
+  };
+
+  //Edit function
+  const editList = (event) => {
+    let EditId = Number(atob(event.currentTarget.id));
+    if (EditId !== 0) {
+      setEditModalOpen(true);
+      setModalId(EditId);
+    }
+    else {
+      setEditModalOpen(false);
+      setModalId(0);
+    }
+  }
+
+  const DeleteModalFunction = (event) => {
+    let value = event.currentTarget.id;
+    let rowId = ModalId;
+    if (value === "Yes") {
+      console.log(rowId);
+      setDeleteModalOpen(false);
+      setSuccessMsg(true);
+    }
+    else {
+      setDeleteModalOpen(false);
+      setModalId(0);
+    }
+  };
+
+  //Delete function
+  const deleteList = (event) => {
+    let DeleteId = Number(atob(event.currentTarget.id));
+    if (DeleteId !== 0) {
+      setDeleteModalOpen(true);
+      setModalId(DeleteId);
+    }
+    else {
+      setDeleteModalOpen(false);
+      setModalId(0);
+    }
+  }
   return (
     <>
+    {SuccessMsg && (<SuccessAlert />)}
+      {DeleteModalOpen && (
+        <DeleteModal DeleteModalOpen={DeleteModalOpen} DeleteModalFunction={DeleteModalFunction} />
+      )}
+      <AddService EditModalOpen={EditModalOpen} CloseModalFunction={CloseModalFunction}/>
       <DashboardCard title="">
         <div className="block md:flex lg:flex xl:flex 2xl:flex justify-between items-center">
           <Typography variant="h5">Blog list</Typography>
-          <Button className="flex justify-between items-center bg-blue-600 text-white hover:bg-blue-400"><IconCirclePlus className="pr-2" />Add Button</Button>
+          <Button onClick={EditModalFunction} className="flex justify-between items-center bg-blue-600 text-white hover:bg-blue-400"><IconCirclePlus className="pr-2" />Add Service</Button>
         </div>
 
         <Box sx={{ overflow: 'auto', width: { xs: '280px', sm: 'auto' } }}>
@@ -141,10 +205,10 @@ export default function Blog() {
                     <TableCell>
                       <div className="flex justify-between items-center">
                         <Tooltip title="View" arrow>
-                          <IconEdit className="mx-auto text-primary-main cursor-pointer" />
+                          <IconEdit onClick={editList} id={btoa(product.id)} className="mx-auto text-primary-blue cursor-pointer" />
                         </Tooltip>
                         <Tooltip title="Delete" arrow>
-                          <IconTrashX className="mx-auto text-error-main cursor-pointer" />
+                          <IconTrashX onClick={deleteList} id={btoa(product.id)} className="mx-auto text-error-main cursor-pointer" />
                         </Tooltip>
                       </div>
                     </TableCell>
