@@ -24,8 +24,8 @@ export default async (req, res) => {
         if (result.recordset.length !== 0) {           
             const user = result.recordset[0];
             // Generate and return a JWT token
-            const token = generateAuthToken(user);             
-            res.status(200).json({ token, user });                    
+        //    const token = generateAuthToken(user);             
+            res.status(200).json({ user });                    
         } else {
             // Invalid credentials            
             res.status(401).json({ error: 'Invalid credentials' });
