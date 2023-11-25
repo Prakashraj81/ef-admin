@@ -22,6 +22,16 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
+    "/admin/Dashborad": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/admin/Dashborad.js"
+    ],
+    "/admin/gallery/gallery": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/admin/gallery/gallery.js"
+    ],
     "/admin/users/users": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

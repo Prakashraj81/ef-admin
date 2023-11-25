@@ -247,7 +247,7 @@ export default function UserListPage() {
                     </TableCell>
                     <TableCell>
                       <div className="flex justify-between items-center">
-                        <Tooltip title="View" arrow>
+                        <Tooltip title="Edit" arrow>
                           <IconEdit onClick={EditModalFunction} id={btoa(UserList.Id)} className="mx-auto text-primary-main cursor-pointer" />
                         </Tooltip>
                         <Tooltip title="Delete" arrow>
