@@ -27,11 +27,6 @@
       "static/chunks/main.js",
       "static/chunks/pages/admin.js"
     ],
-    "/admin/auth/login": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/admin/auth/login.js"
-    ],
     "/admin/users/users": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
