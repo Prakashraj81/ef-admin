@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import Image from "next/image";
+import axios from 'axios';
 import FullLayout from "../../../components/layouts/full/FullLayout";
 import {
   Typography,
@@ -17,40 +18,145 @@ import {
 import DashboardCard from "../../../components/shared/DashboardCard";
 import { IconEdit, IconCirclePlus, IconTrashX } from "@tabler/icons-react";
 import theme from "../../../components/shared/theme";
+import DeleteModal from "../../../components/modal/delete-modal";
+import Alert from '@mui/material/Alert';
+import Backdrop from '@mui/material/Backdrop';
+import BackdropLoader from '../../../components/loader/backdrop-loader';
+import SuccessAlert from "../../../components/alert/success-alert";
+import AddUser from "./add-user";
 
-const products = [
-  {
-    id: "1",
-    heading: "Blog heading",
-    image: "/images/favicon-mine-life.png",
-    date: "2023-06-05",
-    status: "Active",
-  },
-  {
-    id: "2",
-    heading: "Blog heading",
-    image: "/images/favicon-mine-life.png",
-    date: "2023-06-05",
-    status: "Active",
-  },
-  {
-    id: "2",
-    heading: "Blog heading",
-    image: "/images/profile/user-1.jpg",
-    date: "2023-06-05",
-    status: "InActive",
-  },
-];
+export default function UserListPage() {
+  let [page, setPage] = React.useState(0);
+  let [rowsPerPage, setRowsPerPage] = React.useState(5);
+  let [EditModalOpen, setEditModalOpen] = React.useState(false);
+  let [EditValue, setEditValue] = React.useState([]);
+  let [UserList, setUserList] = React.useState();
+  let [ModalId, setModalId] = useState(0);
+  let [DeleteModalOpen, setDeleteModalOpen] = React.useState(false);
+  let [SuccessMsg, setSuccessMsg] = React.useState(false);
+  let [ShowLoader, setShowLoader] = useState(false);  
+  let [PageLoadStatus, setPageLoadStatus] = useState(true);  
 
-export default function Blog() {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const EditModalFunction = (event) => {    
+    let EditId = event.currentTarget.id;
+    EditId = Number(atob(event.currentTarget.id));    
+    if(EditId !== 0){      
+      GetUserList(EditId);            
+    }
+    else {
+      setEditModalOpen(true);
+    }    
+  };
+  const CloseModalFunction = () => {
+    setEditModalOpen(false);
+  };
+
+  useEffect(() => {    
+    if(PageLoadStatus){
+      GetUserList(0);      
+    }    
+  }, []);
+
+
+  //Get user list api function
+  const GetUserList = async (id) => {
+    console.log("EditId:" + id);
+    setShowLoader(true);
+    try {
+      let data = { Id: id };  
+      if (id !== 0) {
+        const response = await axios.post('/api/users/select', data);
+        if (response.data.user.length !== 0) {
+          setEditValue(response.data.user[0]);
+          setEditModalOpen(true);
+          setShowLoader(false);
+        } else {
+          setEditValue([]);
+        }
+      } else {
+        const response = await axios.post('/api/users/select', data);
+        if (response.data.user.length !== 0) {
+          setUserList(response.data.user);
+        } else {
+          setUserList([]);
+        }
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+    setPageLoadStatus(false);
+    setShowLoader(false);
+  };    
+
+
+  //Delete modal popup open function
+  const DeleteModalFunction = async (event) => {
+    let value = event.currentTarget.id;
+    let data = { Id: ModalId };    
+    if (value === "Yes") {
+      setDeleteModalOpen(false);
+      setShowLoader(true);
+        try {
+            const response = await axios.post('/api/users/delete', data);
+            console.log('Delete response:', response.data);
+            setDeleteModalOpen(false);
+            if (response.data.message === "User deleted successfully") {                
+                //Update user list
+                setSuccessMsg(true);
+                GetUserList(0); 
+                setShowLoader(false);
+            } else {
+                console.log(response.data.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            console.log('Full Axios Error:', error.response);
+        }
+    } else {
+        setDeleteModalOpen(false);
+        setModalId(0);
+    }
+};
+
+  
+
+  //Delete user function api
+  const DeleteUser = (event) => {
+    let DeleteId = 0;
+    DeleteId = Number(atob(event.currentTarget.id));
+    if (DeleteId !== 0) {
+      setDeleteModalOpen(true);
+      setModalId(DeleteId);
+    }
+    else {
+      setDeleteModalOpen(false);
+      setModalId(0);
+    }    
+  }
+
+
   return (
     <>
+    <>
+    {ShowLoader && (
+          <BackdropLoader ShowLoader={ShowLoader} />
+        )}
+      </>
+    {SuccessMsg && (<SuccessAlert />)}
+      {DeleteModalOpen && (
+        <DeleteModal DeleteModalOpen={DeleteModalOpen} DeleteModalFunction={DeleteModalFunction} />
+      )}
+      <AddUser EditValue={EditValue} EditModalOpen={EditModalOpen} CloseModalFunction={CloseModalFunction}/>
       <DashboardCard title="">
         <div className="block md:flex lg:flex xl:flex 2xl:flex justify-between items-center">
-          <Typography variant="h5">Blog list</Typography>
-          <Button className="flex justify-between items-center bg-blue-600 text-white hover:bg-blue-400"><IconCirclePlus className="pr-2" />Add Button</Button>
+          <Typography variant="h5">User list</Typography>
+          <Button 
+          onClick={EditModalFunction}
+          style={{
+            backgroundColor: theme.palette.primary.main,
+            color: "#FFF",
+          }}
+          className="flex justify-between items-center bg-blue-600 text-white hover:bg-blue-400"><IconCirclePlus className="pr-2" />Add user</Button>
         </div>
 
         <Box sx={{ overflow: 'auto', width: { xs: '280px', sm: 'auto' } }}>
@@ -61,20 +167,20 @@ export default function Blog() {
                   <Typography variant="subtitle2" fontWeight={600}>
                     S.No
                   </Typography>
-                </TableCell>
+                </TableCell>                
                 <TableCell>
                   <Typography variant="subtitle2" fontWeight={600}>
-                    Image
+                    Name
                   </Typography>
                 </TableCell>
                 <TableCell>
                   <Typography variant="subtitle2" fontWeight={600}>
-                    Heading
+                    Email
                   </Typography>
                 </TableCell>
                 <TableCell>
                   <Typography variant="subtitle2" fontWeight={600}>
-                    Date
+                    Phone no
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -90,26 +196,27 @@ export default function Blog() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {products
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((product) => (
-                  <TableRow key={product.name} sx={{ border: "2px solid #f6f9fc" }}>
+            {UserList && Array.isArray(UserList) ? (
+    UserList
+      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+      .map((UserList) => (
+        <TableRow key={UserList.Name} sx={{ border: "2px solid #f6f9fc" }}>
                     <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
                       <Typography>
-                        {product.id}
+                        {UserList.Id}
                       </Typography>
+                    </TableCell>                   
+                    <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
+                      <Typography>{UserList.Name}</Typography>
                     </TableCell>
                     <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
-                      <Image className="rounded-full mx-auto" src={product.image} width={40} height={40} alt="Image" />
+                      <Typography>{UserList.Email}</Typography>
                     </TableCell>
                     <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
-                      <Typography>{product.heading}</Typography>
-                    </TableCell>
+                      <Typography>{UserList.PhoneNo}</Typography>
+                    </TableCell>                    
                     <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
-                      <Typography>{product.date}</Typography>
-                    </TableCell>
-                    <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
-                      {product.status === "Active" ? (
+                      {UserList.Active === 1 ? (
                         <>
                           <Chip
                             className="text-xs"
@@ -118,7 +225,7 @@ export default function Blog() {
                               color: theme.palette.success.main,
                             }}
                             size="small"
-                            label={product.status}
+                            label={"Active"}
                           ></Chip>
                         </>
                       )
@@ -132,7 +239,7 @@ export default function Blog() {
                                 backgroundColor: theme.palette.error.light,
                                 color: theme.palette.error.main,
                               }}
-                              label={product.status}
+                              label={"InActive"}
                             ></Chip>
                           </>
                         )
@@ -141,22 +248,24 @@ export default function Blog() {
                     <TableCell>
                       <div className="flex justify-between items-center">
                         <Tooltip title="View" arrow>
-                          <IconEdit className="mx-auto text-primary-main cursor-pointer" />
+                          <IconEdit onClick={EditModalFunction} id={btoa(UserList.Id)} className="mx-auto text-primary-main cursor-pointer" />
                         </Tooltip>
                         <Tooltip title="Delete" arrow>
-                          <IconTrashX className="mx-auto text-error-main cursor-pointer" />
+                          <IconTrashX id={btoa(UserList.Id)} onClick={DeleteUser} className="mx-auto text-error-main cursor-pointer" />
                         </Tooltip>
                       </div>
                     </TableCell>
                   </TableRow>
-                ))}
+      ))
+  ) : null}
+              
             </TableBody>
           </Table>
         </Box>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25, 50]}
           component="div"
-          count={products.length}
+          count={UserList ? UserList.length : 0}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={(event, newPage) => {
@@ -172,6 +281,6 @@ export default function Blog() {
   )
 }
 
-Blog.getLayout = function getLayout(page) {
+UserListPage.getLayout = function getLayout(page) {
   return <FullLayout>{page}</FullLayout>;
 };

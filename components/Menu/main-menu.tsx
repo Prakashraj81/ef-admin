@@ -1,9 +1,4 @@
-const menuItems = [   
-    {
-        title: "Home-2",
-        url: "/home-2",
-        cName: "nav-links"
-    }, 
+const menuItems = [     
     {
         title: "About Us",
         url: "/about-us",

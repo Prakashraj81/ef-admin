@@ -113,7 +113,7 @@ export default function ContactForm() {
         setIsOpen(false)        
     }
     return (
-        <div className="bg-primary-light">
+        <div className="bg-white">
             <form action="#" className="w-full inline-block" method="POST" onSubmit={handleSubmit(onSubmit)}>
                 <Transition appear show={isOpen} as={Fragment}>
                     <Dialog as="div" className="relative z-10" onClose={closeModal}>

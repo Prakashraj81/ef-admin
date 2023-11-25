@@ -10,9 +10,9 @@ import { IconX } from "@tabler/icons-react";
 import Slide from '@mui/material/Slide';
 
 export default function SuccessAlert() {
-    // const Transition = React.forwardRef(function Transition(props, ref) {
-    //     return <Slide direction="left" ref={ref} {...props} />;
-    // });
+    const Transition = React.forwardRef(function Transition(props, ref) {
+        return <Slide direction="left" ref={ref} {...props} />;
+    });
     const [open, setOpen] = React.useState(true);    
 
     return (
