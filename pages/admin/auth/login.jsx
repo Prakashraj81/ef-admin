@@ -63,7 +63,7 @@ const AdminLogin = () => {
       
     //Api setup
     if (isSumbitDisabled !== true) {        
-        axios.post('/api/auth/select', defaultValues)
+      await axios.post('/api/auth/select', defaultValues)
           .then(response => {
             console.log(response.data);
             sessionStorage.setItem('Auth', response.data.user.Id);

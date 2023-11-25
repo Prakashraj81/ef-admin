@@ -2,9 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/admin/users/users": "pages/admin/users/users.js",
-  "/admin/Dashborad": "pages/admin/Dashborad.js",
-  "/api/users/insert": "pages/api/users/insert.js",
-  "/api/users/select": "pages/api/users/select.js",
-  "/admin/gallery/gallery": "pages/admin/gallery/gallery.js"
+  "/admin/auth/login": "pages/admin/auth/login.js",
+  "/admin": "pages/admin.js",
+  "/api/auth/select": "pages/api/auth/select.js"
 }
