@@ -33,6 +33,6 @@ export default async (req, res) => {
         res.json(result.recordset);
     } catch (error) {
         console.error('Error executing query:', error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ error: error });
     }
 };
