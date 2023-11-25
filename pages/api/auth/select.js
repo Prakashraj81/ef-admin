@@ -18,20 +18,18 @@ export default async (req, res) => {
     try {
         await sql.connect(config);
         let result = await sql.query`Select * from Authentication where PhoneNo=${UserName} and Password=${Password} and Active=1`;
-        // if(result.recordset.length === 0) {
-        //     result = await sql.query`Select Id from Authentication where Email=${UserName} and Password=${Password} and Active=1`;
-        // }     
-        // if (result.recordset.length !== 0) {           
-        //     const user = result.recordset[0];
-        //     // Generate and return a JWT token
-        // //    const token = generateAuthToken(user);             
-        //     res.status(200).json({ user });                    
-        // } else {
-        //     // Invalid credentials            
-        //     res.status(401).json({ error: 'Invalid credentials' });
-        // }
-        const user = result.recordset[0];  
-        res.status(200).json({ user });          
+        if(result.recordset.length === 0) {
+            result = await sql.query`Select Id from Authentication where Email=${UserName} and Password=${Password} and Active=1`;
+        }     
+        if (result.recordset.length !== 0) {           
+            const user = result.recordset[0];
+            //Generate and return a JWT token
+            //const token = generateAuthToken(user);             
+            res.status(200).json({ user });                    
+        } else {
+            // Invalid credentials            
+            res.status(401).json({ error: 'Invalid credentials' });
+        }              
     } catch (error) {
         console.error('Error executing query:', error);
         res.status(500).json({ error: error });
