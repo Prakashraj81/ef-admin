@@ -27,10 +27,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/admin/Dashborad.js"
     ],
-    "/admin/gallery/gallery": [
+    "/admin/blog-post/blog-post": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/admin/gallery/gallery.js"
+      "static/chunks/pages/admin/blog-post/blog-post.js"
     ],
     "/admin/users/users": [
       "static/chunks/webpack.js",

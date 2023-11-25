@@ -2,7 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/admin/Dashborad": "pages/admin/Dashborad.js",
   "/admin/users/users": "pages/admin/users/users.js",
-  "/admin/gallery/gallery": "pages/admin/gallery/gallery.js"
+  "/admin/gallery/gallery": "pages/admin/gallery/gallery.js",
+  "/admin/Dashborad": "pages/admin/Dashborad.js",
+  "/admin/blog-post/blog-post": "pages/admin/blog-post/blog-post.js"
 }

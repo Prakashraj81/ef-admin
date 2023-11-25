@@ -5,8 +5,8 @@ export default async (req, res) => {
     await sql.connect(config);
     let result = await sql.query`Select count(Id) from Authentication`;    
     if (result.recordset.length !== 0) {
-      const user = result.recordset;
-      res.status(200).json({ user });
+      const count = result.recordset;
+      res.status(200).json({ count });
     } else {
       res.status(401).json({ error: 'User count not found' });
     }

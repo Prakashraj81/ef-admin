@@ -10,9 +10,9 @@ let [TotalUsers, setTotalUsers] = useState(0);
 //Get user list api function
 const GetUserCount = async () => {
     try {
-      const response = await axios.post('/api/users/getuser');
-        if (response.data.user.length !== 0) {
-            setTotalUsers(response.data.user.length);
+      const response = await axios.post('/api/auth/getuser');      
+        if (response.data.count.length !== 0) {
+            setTotalUsers(response.data.count[0][""]);
         } else {
             setTotalUsers(0);
         }
