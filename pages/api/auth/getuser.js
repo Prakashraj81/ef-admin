@@ -4,7 +4,7 @@ export default async (req, res) => {
 let { PhoneNo, Password } = req.body;
   try {
     await sql.connect(config);
-    let result = await sql.query`Select * from Authentication where PhoneNo=${PhoneNo} and Password=${Password}`;
+    let result = await sql.query`Select * from Authentication where PhoneNo=${PhoneNo} and Password=${Password} and Active=1`;
     // if (Id !== 0) {
     //   result = await sql.query`Select * from Authentication where Id=${Id}`;
     // } else {
