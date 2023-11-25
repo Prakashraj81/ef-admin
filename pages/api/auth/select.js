@@ -18,9 +18,9 @@ export default async (req, res) => {
     try {
         await sql.connect(config);
         let result = await sql.query`Select Id from Authentication where PhoneNo=${UserName} and Password=${Password} and Active=1`;
-        if(result.recordset.length === 0) {
-            result = await sql.query`Select Id from Authentication where Email=${UserName} and Password=${Password} and Active=1`;
-        }     
+        // if(result.recordset.length === 0) {
+        //     result = await sql.query`Select Id from Authentication where Email=${UserName} and Password=${Password} and Active=1`;
+        // }     
         if (result.recordset.length !== 0) {           
             const user = result.recordset[0];
             // Generate and return a JWT token
