@@ -30,10 +30,8 @@ export default async (req, res) => {
         //     // Invalid credentials            
         //     res.status(401).json({ error: 'Invalid credentials' });
         // }
-        res.json(result.recordset);
-        //const user = result.recordset[0];
-        //const token = generateAuthToken("user");      
-        //res.status(200).json({ token });  
+        const user = result.recordset[0];  
+        res.status(200).json({ user });          
     } catch (error) {
         console.error('Error executing query:', error);
         res.status(500).json({ error: error });
