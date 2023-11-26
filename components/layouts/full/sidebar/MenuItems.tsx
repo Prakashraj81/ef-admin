@@ -1,6 +1,6 @@
 import {
   IconAperture, IconCopy, IconLayoutDashboard, IconLogin, IconMoodHappy, IconTypography, IconUserPlus, IconUsersGroup, 
-  IconPhotoPlus, IconArticle, IconAssembly, IconCalendarEvent, IconCertificate, IconTicket, IconBuildingCommunity, IconHelpOctagon
+  IconPhotoPlus, IconCategory, IconArticle, IconAssembly, IconCalendarEvent, IconCertificate, IconTicket, IconBuildingCommunity, IconHelpOctagon
 } from '@tabler/icons-react';
 
 import { uniqueId } from 'lodash';
@@ -45,7 +45,12 @@ const Menuitems = [
     icon: IconAssembly,
     href: '/admin/services/services',
   }, 
- 
+  {
+    id: uniqueId(),
+    title: 'Event category',
+    icon: IconCategory,
+    href: '/admin/event-category/event-category',
+  },   
   {
     id: uniqueId(),
     title: 'Events',

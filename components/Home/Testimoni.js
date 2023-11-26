@@ -1,13 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
+import Image from "next/image";
+import axios from 'axios';
 
 // import react slick
 import Slider from "react-slick";
-import Image from "next/image";
 import Stars from "../../public/home/stars.svg";
 import ArrowBack from "../../public/home/eva_arrow-back-fill.svg";
 import ArrowNext from "../../public/home/eva_arrow-next-fill.svg";
 
 const Testimoni = () => {
+  let [TestimonialsList, setTestimonialsList] = React.useState();
+  let [ShowLoader, setShowLoader] = useState(false); 
+  let [PageLoadStatus, setPageLoadStatus] = useState(true); 
+
+  useEffect(() => {    
+      GetTestimonialsList(0);  
+    }, []);
+
+//Get testimonials list api function
+const GetTestimonialsList = async (id) => {
+  setShowLoader(true);
+  try {
+      const response = await axios.post('/api/testimonials/gettestimonials');
+      if (response.data.testimonials.length !== 0) {
+        setTestimonialsList(response.data.testimonials);
+      } else {
+        setTestimonialsList([]);
+      }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+  setPageLoadStatus(false);
+  setShowLoader(false);
+};  
+
+
+
+
   const listTestimoni = [
     {
       name: "Prakashraj",
@@ -134,6 +163,12 @@ const Testimoni = () => {
         ref={setSliderRef}
         className="flex items-stretch justify-items-stretch"
       >
+
+
+    
+
+
+
         {listTestimoni.map((listTestimonis, index) => (
           <div className="px-3 flex items-stretch" key={index}>
             <div className="border-1 border-custom-black hover:border-primary-color transition-all rounded-lg p-8 flex flex-col">
@@ -150,7 +185,7 @@ const Testimoni = () => {
                       {listTestimonis.name}
                     </p>
                     <p className="text-sm text-custom-black capitalize">
-                      {listTestimonis.city},{listTestimonis.country}
+                      {listTestimonis.city},{"india"}
                     </p>
                   </div>
                 </div>

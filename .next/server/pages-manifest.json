@@ -2,12 +2,10 @@
   "/_error": "pages/_error.js",
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
-  "/admin/testimonials/testimonials": "pages/admin/testimonials/testimonials.js",
-  "/testimonials": "pages/testimonials.js",
-  "/api/testimonials/gettestimonials": "pages/api/testimonials/gettestimonials.js",
-  "/admin": "pages/admin.js",
+  "/admin/event-category/event-category": "pages/admin/event-category/event-category.js",
+  "/api/event-category/delete": "pages/api/event-category/delete.js",
+  "/admin/Dashborad": "pages/admin/Dashborad.js",
+  "/api/event-category/select": "pages/api/event-category/select.js",
   "/api/auth/getuser": "pages/api/auth/getuser.js",
-  "/api/testimonials/select": "pages/api/testimonials/select.js",
-  "/api/testimonials/insert": "pages/api/testimonials/insert.js",
-  "/api/testimonials/delete": "pages/api/testimonials/delete.js"
+  "/admin/events/events": "pages/admin/events/events.js"
 }
