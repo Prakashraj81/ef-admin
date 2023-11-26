@@ -44,6 +44,7 @@ export default function UserListPage() {
       GetUserList(EditId);            
     }
     else {
+      setEditValue([]);
       setEditModalOpen(true);
     }    
   };
@@ -60,7 +61,6 @@ export default function UserListPage() {
 
   //Get user list api function
   const GetUserList = async (id) => {
-    console.log("EditId:" + id);
     setShowLoader(true);
     try {
       let data = { Id: id };  
@@ -98,7 +98,6 @@ export default function UserListPage() {
       setShowLoader(true);
         try {
             const response = await axios.post('/api/users/delete', data);
-            console.log('Delete response:', response.data);
             setDeleteModalOpen(false);
             if (response.data.message === "User deleted successfully") {                
                 //Update user list
@@ -199,12 +198,12 @@ export default function UserListPage() {
             {UserList && Array.isArray(UserList) ? (
     UserList
       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-      .map((UserList) => (
+      .map((UserList, index) => (
         <TableRow key={UserList.Name} sx={{ border: "2px solid #f6f9fc" }}>
                     <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
-                      <Typography>
-                        {UserList.Id}
-                      </Typography>
+                    <Typography>
+                      {index + 1}
+                    </Typography>
                     </TableCell>                   
                     <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
                       <Typography>{UserList.Name}</Typography>

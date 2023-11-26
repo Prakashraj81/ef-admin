@@ -165,13 +165,16 @@ export default function AddUser({EditValue, EditModalOpen, CloseModalFunction}) 
 
   PageLoad(EditValue);
   function PageLoad(EditValue){
-    useEffect(() => {  
-        setName("");
-        setEmail("");
-        setPhoneNo("");
-        setPassword("");
-        setConfirmPassword("");  
-        if(EditValue.Id !== 0){
+    useEffect(() => {          
+        if(EditValue.length === 0){
+          setName("");
+          setEmail("");
+          setPhoneNo("");
+          setPassword("");
+          setConfirmPassword("");  
+        } 
+        else {
+          if(EditValue.Id !== 0){
             setUpdateUserId(EditValue.Id);
             setId(EditValue.Id);            
         }
@@ -200,7 +203,8 @@ export default function AddUser({EditValue, EditModalOpen, CloseModalFunction}) 
           } else {    
             setPassword('');
             setConfirmPassword('');
-          }      
+          }     
+        }
       }, [EditValue]);
   }
 

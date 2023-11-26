@@ -12,6 +12,11 @@
   ],
   "rootMainFiles": [],
   "pages": {
+    "/": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/index.js"
+    ],
     "/_app": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
@@ -22,20 +27,20 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/admin/Dashborad": [
+    "/admin": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/admin/Dashborad.js"
+      "static/chunks/pages/admin.js"
     ],
-    "/admin/blog-post/blog-post": [
+    "/admin/testimonials/testimonials": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/admin/blog-post/blog-post.js"
+      "static/chunks/pages/admin/testimonials/testimonials.js"
     ],
-    "/admin/users/users": [
+    "/testimonials": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/admin/users/users.js"
+      "static/chunks/pages/testimonials.js"
     ]
   },
   "ampFirstPages": []

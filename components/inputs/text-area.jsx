@@ -14,10 +14,9 @@ export default function BasicTextArea({title}) {
       autoComplete="off"
     >      
     <Typography>{title}</Typography>
-    <TextareaAutosize
-        id={title}
+    <TextareaAutosize        
         aria-label="minimum height"
-        minRows={4}
+        minRows={5}
         placeholder=""                
         style={{ width: '100%' }}
       />    

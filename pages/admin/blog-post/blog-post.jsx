@@ -113,9 +113,14 @@ export default function Blog() {
       <AddPost EditModalOpen={EditModalOpen} CloseModalFunction={CloseModalFunction}/>
       <DashboardCard title="">
       <div className="block md:flex lg:flex xl:flex 2xl:flex justify-between items-center">
-          <Typography variant="h5">Blog post</Typography>
-          <Button
-            onClick={EditModalFunction} className="flex justify-between items-center bg-blue-600 text-white hover:bg-blue-400"><IconCirclePlus className="pr-1" />Add New</Button>
+          <Typography variant="h5">Blog post list</Typography>
+          <Button 
+          onClick={EditModalFunction}
+          style={{
+            backgroundColor: theme.palette.primary.main,
+            color: "#FFF",
+          }}
+          className="flex justify-between items-center bg-blue-600 text-white hover:bg-blue-400"><IconCirclePlus className="pr-2" />Add post</Button>
         </div>
 
         <Box sx={{ overflow: 'auto', width: { xs: '280px', sm: 'auto' } }}>

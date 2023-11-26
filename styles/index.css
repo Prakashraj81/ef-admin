@@ -1,6 +1,6 @@
 @import "slick-carousel/slick/slick.css";
 @tailwind base;
-
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css");
 /* Write your own custom base styles here */
 
 /* Start purging... */
@@ -220,4 +220,39 @@ body {
   border: 1px solid #556cd6;  
   outline-style: solid;
   outline-color: #556cd6;
+}
+
+
+
+
+
+
+.stars-gray {
+  position: relative;
+  display: inline-block;
+}
+
+.stars-yellow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+}
+
+.stars-gray::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 24px;
+  color: #ccc;
+}
+
+.stars-yellow::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 24px;
+  color: #f8ce0b;
 }

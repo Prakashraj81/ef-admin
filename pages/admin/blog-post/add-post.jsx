@@ -100,8 +100,7 @@ export default function AddPost({EditModalOpen, CloseModalFunction}) {
 
 
             <div>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload Image</button>
+      <input type="file" onChange={handleFileChange} />      
     </div>
 
               <div className="w-full inline-block mb-7">
