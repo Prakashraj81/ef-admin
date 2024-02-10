@@ -120,18 +120,26 @@ export default function ContactUsForm() {
             PhoneNo: PhoneNo,
             Message: Message,
         };
-        if (defaultValues.FullName != "") {
-            try {
-                await axios.post('/api/enquiry/insert', { Id, EnquiryDate, FullName, Email, PhoneNo, Message });
-                onSubmitAPI(defaultValues); 
-              } catch (error) {                
-                console.error('Error inserting enquiry:', error);
-                console.log('Error inserting enquiry:', error);
-              }                         
-        }
-        else {
-            console.log("Failed");
-        }        
+        // if (defaultValues.FullName != "") {
+        //     try {
+        //         await axios.post('/api/enquiry/insert', { Id, EnquiryDate, FullName, Email, PhoneNo, Message });
+        //         onSubmitAPI(defaultValues); 
+        //       } catch (error) {                
+        //         console.error('Error inserting enquiry:', error);
+        //         console.log('Error inserting enquiry:', error);
+        //       }                         
+        // }
+        // else {
+        //     console.log("Failed");
+        // }   
+        
+        try {
+            await axios.post('/api/enquiry/insert', { Id, EnquiryDate, FullName, Email, PhoneNo, Message });
+            onSubmitAPI(defaultValues); 
+            } catch (error) {                
+            console.error('Error inserting enquiry:', error);
+            console.log('Error inserting enquiry:', error);
+        }    
     };
 
     let [isOpen, setIsOpen] = useState(false)
