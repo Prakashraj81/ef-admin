@@ -1,9 +1,0 @@
-{
-  "version": 1,
-  "functions": {
-    "/api/event-category/imageupload": {},
-    "/api/events/imageupload": {},
-    "/api/post/insert": {},
-    "/api/services/imageupload": {}
-  }
-}
