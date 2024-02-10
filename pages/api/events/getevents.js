@@ -3,10 +3,10 @@ import { sql, config } from '/config';
 export default async (req, res) => {
   try {
     await sql.connect(config);
-    let result = await sql.query`Select * from EventMaster where Active=1`;    
+    let result = await sql.query`Select count(Id) from EventMaster`;    
     if (result.recordset.length !== 0) {
-      const event = result.recordset;
-      res.status(200).json({ event });
+      const count = result.recordset;
+      res.status(200).json({ count });
     } else {
       res.status(401).json({ error: 'event list not found' });
     }

@@ -2,17 +2,22 @@ import { sql, config } from '/config';
 
 //User create api
 export default async (req, res) => {
-    const { Id, ReviewDate, CustomerName, City, Contents, AvgRating } = req.body;
+    const { Id, EventDate, EventCategoryRefId, EventHeading, EventName, EventImage, EventAmount, EventClassCount, EventMembers, EventRating, EventStarRating } = req.body;
     try {
       await sql.connect(config);
-      if(Id !== 0){
-        await sql.query`Update EventMaster set Date=${ReviewDate}, CustomerName=${CustomerName}, City=${City}, Message=${Contents}, Rating=${AvgRating}, StarRating=${AvgRating}, Active=${1}, Modified_Date=${ReviewDate}, Modified_By=${"Admin"} where Id=${Id}`;        
-        res.status(200).json({ message: 'Testimonial updated successfully' });
-      }
+      if(EventCategoryRefId !== 0 && EventHeading !== ""){
+        if(Id !== 0){
+          await sql.query`Update EventMaster set Date=${EventDate}, EventCategoryRefId=${EventCategoryRefId}, EventHeading=${EventHeading}, EventName=${EventName}, EventImage=${EventImage}, EventAmount=${EventAmount}, EventClassCount=${EventClassCount}, EventMembers=${EventMembers}, EventRating=${EventRating}, EventStarRating=${EventStarRating}, Active=${1}, Modified_Date=${EventDate}, Modified_By=${"Admin"} where Id=${Id}`;        
+          res.status(200).json({ message: 'Event updated successfully' });
+        }
+        else {
+          await sql.query`Insert into EventMaster (Date, EventCategoryRefId, EventHeading, EventName, EventImage, EventAmount, EventClassCount, EventMembers, EventRating, EventStarRating, Status, Active, Created_Date, Creadted_By) values (${EventDate}, ${EventCategoryRefId}, ${EventHeading}, ${EventName}, ${EventImage}, ${EventAmount}, ${EventClassCount}, ${EventMembers}, ${EventRating}, ${EventStarRating}, ${"1"}, ${1}, ${EventDate}, ${"Admin"})`;
+         res.status(200).json({ message: 'Event inserted successfully' });
+        }     
+      } 
       else {
-        await sql.query`Insert into EventMaster (Date, CustomerName, City, Message, Rating, StarRating, Status, Active, Created_Date, Creadted_By) values (${ReviewDate}, ${CustomerName}, ${City}, ${Contents}, ${AvgRating}, ${AvgRating}, ${"1"}, ${1}, ${ReviewDate}, ${"Admin"})`;
-       res.status(200).json({ message: 'Testimonial inserted successfully' });
-      }      
+        res.status(500).json("Invalid event heading and category name");
+      }
   } catch (error) {
       console.error('Error inserting event:', error);
       res.status(500).json({ error: error });

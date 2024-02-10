@@ -66,16 +66,18 @@ export default function Blog() {
     try {
       let data = { Id: id };  
       if (id !== 0) {
-        //const response = await axios.post('/api/events/select', data);
+        const response = await axios.post('/api/events/select', data);
         if (response.data.events.length !== 0) {
           setEditValue(response.data.events[0]);
           setEditModalOpen(true);
           setShowLoader(false);
         } else {
+          setEditModalOpen(false);
+          setShowLoader(false);
           setEditValue([]);
         }
       } else {
-        //const response = await axios.post('/api/events/select', data);
+        const response = await axios.post('/api/events/select', data);
         if (response.data.events.length !== 0) {
           setEventList(response.data.events);
         } else {
@@ -98,9 +100,9 @@ export default function Blog() {
       setDeleteModalOpen(false);
       setShowLoader(true);
         try {
-            //const response = await axios.post('/api/events/delete', data);
+            const response = await axios.post('/api/events/delete', data);
             setDeleteModalOpen(false);
-            if (response.data.message === "Testimonial deleted successfully") {                
+            if (response.data.message === "Events deleted successfully") {                
                 //Update events list
                 setSuccessMsg(true);
                 GetEventList(0); 
@@ -188,6 +190,11 @@ export default function Blog() {
                 </TableCell>
                 <TableCell>
                   <Typography variant="subtitle2" fontWeight={600}>
+                    Date
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle2" fontWeight={600}>
                     Status
                   </Typography>
                 </TableCell>
@@ -210,10 +217,16 @@ export default function Blog() {
                     </Typography>
                     </TableCell>                   
                     <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
-                      <Typography>{EventList.CustomerName}</Typography>
+                    <Image className="rounded-full mx-auto" src={"/events/" + EventList.EventImage} width={40} height={40} alt={EventList.EventImage} />
                     </TableCell>
                     <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
-                      <Typography>{EventList.StarRating}</Typography>
+                      <Typography>{EventList.EventCategoryName}</Typography>
+                    </TableCell>
+                    <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
+                      <Typography>{EventList.EventName}</Typography>
+                    </TableCell>
+                    <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
+                      <Typography>₹{EventList.EventAmount}</Typography>
                     </TableCell>
                     <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
                     <Typography>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import Slider from "react-slick";
 import Image from "next/image";
 import Card from "@mui/material/Card";
@@ -9,61 +9,34 @@ import { Button, CardActionArea, CardActions } from "@mui/material";
 import Stars from "../../public/home/stars.svg";
 import ArrowBack from "../../public/home/eva_arrow-back-fill.svg";
 import ArrowNext from "../../public/home/eva_arrow-next-fill.svg";
+import axios from 'axios';
 
-const ServiceCardSlider = () => {
-  const listTestimoni = [
-    {
-        heading: "Service heading-1",
-        image:"/Office-Meeting-1.png",
-        description: "",
-      },
-      {
-        heading: "Service heading-2",
-        image:"/Office-Meeting-2.png",
-        description: "",
-      },
-      {
-        heading: "Service heading-3",
-        image:"/Office-Meeting-3.png",
-        description: "",
-      },
-      {
-        heading: "Service heading-4",
-        image:"/Office-Meeting-4.png",
-        description: "",
-      },
-      {
-        heading: "Service heading-5",
-        image:"/Office-Meeting-1.png",
-        description: "",
-      },
-      {
-        heading: "Service heading-6",
-        image:"/Office-Meeting-2.png",
-        description: "",
-      },
-      {
-        heading: "Service heading-7",
-        image:"/Office-Meeting-3.png",
-        description: "",
-      },
-      {
-        heading: "Service heading-8",
-        image:"/Office-Meeting-4.png",
-        description: "",
-      },
-      {
-        heading: "Service heading-9",
-        image:"/Office-Meeting-1.png",
-        description: "",
-      },
-      {
-        heading: "Service heading-10",
-        image:"/Office-Meeting-2.png",
-        description: "",
-      },
-      
-  ]; // Removed the trailing comma
+const ServiceCardSlider = () => { 
+  let [sliderRef, setSliderRef] = useState(null);
+  let [ServiceList, setServiceList] = React.useState();
+  let [ShowLoader, setShowLoader] = useState(false); 
+  let [PageLoadStatus, setPageLoadStatus] = useState(true); 
+
+    useEffect(() => {    
+        GetServiceList();  
+      }, []);
+
+  //Get testimonials list api function
+  const GetServiceList = async () => {
+    try {
+        const response = await axios.post('/api/services/selectlist');
+        if (response.data.service.length !== 0) {
+          ServiceList = response.data.service;
+          setServiceList(response.data.service);
+          console.log("ServiceList:", ServiceList);
+        } else {
+          setServiceList([]);
+        }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };    
+
 
   // Rest of the code...
   const settings = {
@@ -137,7 +110,6 @@ const ServiceCardSlider = () => {
       },
     ],
   };
-  const [sliderRef, setSliderRef] = useState(null);
 
   return (
     // JSX code...
@@ -147,26 +119,23 @@ const ServiceCardSlider = () => {
         arrows={false}
         ref={setSliderRef}
         className="flex items-stretch justify-items-stretch"
-      >
-        {listTestimoni.map((listTestimonis, index) => (
+      >       
           <div className="px-3 flex items-stretch">
+          {ServiceList?.map((list, index) => (
             <Card>
               <CardActionArea>
                 <CardMedia
                   component="img"
                   height="100%"
-                  image={listTestimonis.image}
+                  image={`/services/${list.Service_Image_1}`}
                   alt="blog-img"
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
-                    {listTestimonis.heading}
+                    {list.ServiceHeading_1}
                   </Typography>
                   <Typography variant="body2" className="text-sm text-custom-black">
-                    Lizards are a widespread group of squamate reptiles, with
-                    over 6,000 species, ranging across all continents except
-                    AntarcticaLizards are a widespread group of squamate
-                    reptiles, with over 6,000 species, 
+                    {list.ServiceContent_1}
                   </Typography>
                 </CardContent>
               </CardActionArea>
@@ -176,8 +145,8 @@ const ServiceCardSlider = () => {
                 </Button>
               </CardActions>
             </Card>
-          </div>
-        ))}
+             ))}
+          </div>       
       </Slider>
       <div className="flex w-full items-center justify-center">
         <div className="flex flex-none justify-between w-auto mt-14">

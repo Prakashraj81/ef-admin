@@ -10,7 +10,7 @@ export default async (req, res) => {
                 UPDATE EventMaster
                 SET Active=${2}, Modified_By=${"Admin"}
                 WHERE Id=${Id}`;
-            res.status(200).json({ message: 'Event deleted successfully' });
+            res.status(200).json({ message: 'Events deleted successfully' });
         } catch (error) {
             console.error('Error updating:', error);
             res.status(500).json({ error: 'Internal server error' });

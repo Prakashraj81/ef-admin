@@ -69,28 +69,46 @@ const Menuitems = [
     navlabel: true,
     subheader: 'SUPPORT MANAGEMENT',
   },
+  // {
+  //   id: uniqueId(),
+  //   title: 'Enquiry',
+  //   icon: IconTicket,
+  //   href: '/admin/enquiry/enquiry',
+  // },
   {
     id: uniqueId(),
-    title: 'Enquiry',
+    title: 'Add Enquiry',
     icon: IconTicket,
-    href: '/admin/enquiry/enquiry',
-  },
-  {
-    navlabel: true,
-    subheader: 'COMPANY MANAGEMENT',
+    href: '/admin/enquiry/add-enquiry',
   },
   {
     id: uniqueId(),
-    title: 'Company Info',
-    icon: IconBuildingCommunity,
-    href: '/admin/company-info/company-info',
+    title: 'Email Enquiry',
+    icon: IconTicket,
+    href: '/admin/enquiry/email-enquiry',
   },
   {
     id: uniqueId(),
-    title: 'FAQ',
-    icon: IconHelpOctagon,
-    href: '/admin/faq/faq',
-  },    
+    title: 'Mobile Enquiry',
+    icon: IconTicket,
+    href: '/admin/enquiry/mobile-enquiry',
+  },
+  // {
+  //   navlabel: true,
+  //   subheader: 'COMPANY MANAGEMENT',
+  // },
+  // {
+  //   id: uniqueId(),
+  //   title: 'Company Info',
+  //   icon: IconBuildingCommunity,
+  //   href: '/admin/company-info/company-info',
+  // },
+  // {
+  //   id: uniqueId(),
+  //   title: 'FAQ',
+  //   icon: IconHelpOctagon,
+  //   href: '/admin/faq/faq',
+  // },    
 ];
 
 export default Menuitems;

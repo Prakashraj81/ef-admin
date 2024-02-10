@@ -209,6 +209,7 @@ body {
   border-style: solid;
   border-width: 1px;
   border-color: rgba(0, 0, 0, 0.23);
+  height: 55px;
 }
 
 .custom-text-area:hover {
@@ -255,4 +256,23 @@ body {
   font-weight: 900;
   font-size: 24px;
   color: #f8ce0b;
+}
+
+.skeleton {
+  background-color: #a5a5a5;
+  animation: skeleton-animation 1s infinite linear;
+}
+
+@keyframes skeleton-animation {
+  0% {
+    opacity: 0.2;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 0.2;
+  }
 }

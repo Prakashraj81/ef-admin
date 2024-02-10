@@ -1,42 +1,29 @@
-import multer from 'multer';
-import { NextApiRequest, NextApiResponse } from 'next';
-import path from 'path';
+import { sql, config } from '/config';
 
-// Define the upload directory as a local path
-const uploadDirectory = path.join(process.cwd(), 'uploads/'); // This assumes the "uploads" directory is in the root of your project
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadDirectory);
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, Date.now() + ext);
-  },
-});
-
-const upload = multer({ storage });
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
+//User create api
 export default async (req, res) => {
-  try {
-    upload.single('image')(req, res, (err) => {
-      if (err) {
-        console.error(err);
-        return res.status(400).end('File upload error.');
+    const { Id, ServiceDate, Heading_1, Contents_1, Image_1, Heading_2, Contents_2, Image_2, Heading_3, Contents_3, Image_3, Heading_4, Contents_4, Image_4, ServiceAmount } = req.body;
+    try {
+      await sql.connect(config);
+      if(Heading_1 !== "" && Contents_1 !== ""){
+        if(Id !== 0){
+          await sql.query`Update ServiceMaster set Date=${ServiceDate}, ServiceHeading_1=${Heading_1}, ServiceHeading_2=${Heading_2}, ServiceHeading_3=${Heading_3}, ServiceContent_1=${Contents_1}, ServiceContent_2=${Contents_2}, ServiceContent_3=${Contents_3}, Service_Image_1=${Image_1}, Service_Image_2=${Image_2}, Service_Image_3=${Image_3}, ServiceAmount=${ServiceAmount}, Active=${1}, Modified_Date=${ServiceDate}, Modified_By=${"Admin"} where Id=${Id}`;        
+          res.status(200).json({ message: 'Event updated successfully' });
+        }
+        else {
+          await sql.query`Insert into ServiceMaster (Date, ServiceHeading_1, ServiceHeading_2, ServiceHeading_3, ServiceContent_1, ServiceContent_2, ServiceContent_3, Service_Image_1, Service_Image_2, Service_Image_3, ServiceAmount, Status, Active, Created_Date, Creadted_By) 
+          values (${ServiceDate}, ${Heading_1}, ${Heading_2}, ${Heading_3}, ${Contents_1}, ${Contents_2}, ${Contents_3}, ${Image_1}, ${Image_2}, ${Image_3}, ${ServiceAmount}, ${"1"}, ${1}, ${ServiceDate}, ${"Admin"})`;
+         res.status(200).json({ message: 'Service inserted successfully' });
+        }     
+      } 
+      else {
+        res.status(500).json("Invalid service heading and contents");
       }
-      // Get the name and path of the uploaded file
-      const uploadedFileName = req.file.originalname;
-      const uploadedFilePath = path.join(uploadDirectory, req.file.filename);
-      console.log('Path:', uploadedFilePath);
-      return res.status(200).end('File uploaded.');
-    });
   } catch (error) {
-    console.error(error);
-    return res.status(500).end('Internal server error.');
+      console.error('Error inserting service:', error);
+      res.status(500).json({ error: error });
+  }
+  finally {
+    await sql.close();
   }
 };

@@ -6,6 +6,7 @@ import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import Collapse from '@mui/material/Collapse';
 import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
 import { IconX } from "@tabler/icons-react";
 import Slide from '@mui/material/Slide';
 
@@ -17,25 +18,28 @@ export default function SuccessAlert() {
 
     return (
         <Box sx={{ width: '100%' }}>
-            <Collapse>
+            <Collapse in={open}>
+            <Slide direction="left" in={true} mountOnEnter unmountOnExit>    
                 <Alert
-                    className='absolute right-0 bottom-0 z-10'
-                    action={
-                        <IconButton
-                            aria-label="close"
-                            color="inherit"
-                            size="small"
-                            onClick={() => {
-                                setOpen(false);
-                            }}
+                className='absolute bg-success-light right-0 bottom-0 z-10'
+                severity="success"
+                action={
+                    <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                            setOpen(false);
+                        }}
+                    >
+                        <IconX fontSize="inherit" />
+                    </IconButton>
+                }
+                sx={{ mb: 2 }}
                         >
-                            <IconX fontSize="inherit" />
-                        </IconButton>
-                    }
-                    sx={{ mb: 2 }}
-                >
-                    <Typography color="inherit" size="small">This is a success alert — check it out!</Typography>
-                </Alert>
+                    <Typography className="success-main" color="inherit" size="small">Enquiry form saved successfully!</Typography>
+                </Alert>          
+            </Slide>
             </Collapse>
         </Box>
     );

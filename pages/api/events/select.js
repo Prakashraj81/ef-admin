@@ -8,14 +8,14 @@ export default async (req, res) => {
     if (Id !== 0) {
       result = await sql.query`Select * from EventMaster where Id=${Id}`;
     } else {
-      result = await sql.query`Select * from EventMaster`;
+      result = await sql.query`Select Id, Date, EventCategoryRefId, EventHeading, EventName, EventImage, EventAmount, EventClassCount, EventMembers, EventRating, EventStarRating, Status, Active, (select EventCategoryName from EventCategoryMaster where Id=EventCategoryRefId) as EventCategoryName from EventMaster`;
     }
 
     if (result.recordset.length !== 0) {
-      const event = result.recordset;
-      res.status(200).json({ event });
+      const events = result.recordset;
+      res.status(200).json({ events });
     } else {
-      res.status(401).json({ error: 'Event list not found' });
+      res.status(401).json({ error: 'Events list not found' });
     }
   } catch (error) {
     console.error('Error executing query:', error);

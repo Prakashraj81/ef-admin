@@ -266,7 +266,8 @@ export default function AddEventCategory({EditValue, EditModalOpen, CloseModalFu
                 {EventCategoryNameError && (
                 <p className="text-red-500" role="alert">This field required</p>
                 )}            
-              </div>              
+              </div>  
+                          
               <div className="w-full inline-block mb-7">
                 <Typography
                   variant="subtitle1"

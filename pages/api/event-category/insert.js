@@ -6,7 +6,7 @@ export default async (req, res) => {
     try {
       await sql.connect(config);
       if(Id !== 0){
-        await sql.query`Update c set Date=${EventDate}, EventCategoryName=${EventCategoryName}, EventCategoryImage=${EventCategoryImage}, Active=${1}, Modified_Date=${EventDate}, Modified_By=${"Admin"} where Id=${Id}`;        
+        await sql.query`Update EventCategoryMaster set Date=${EventDate}, EventCategoryName=${EventCategoryName}, EventCategoryImage=${EventCategoryImage}, Active=${1}, Modified_Date=${EventDate}, Modified_By=${"Admin"} where Id=${Id}`;        
         res.status(200).json({ message: 'Event category updated successfully' });
       }
       else {

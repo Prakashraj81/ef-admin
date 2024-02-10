@@ -6,6 +6,9 @@ import axios from 'axios';
 
 const TopCards = () => {
 let [TotalUsers, setTotalUsers] = useState(0);
+let [TotalEvents, setTotalEvents] = useState(0);
+let [TotalEnquiry, setTotalEnquiry] = useState(0);
+let [TotalServices, setTotalServices] = useState(0);
 
 //Get user list api function
 const GetUserCount = async () => {
@@ -20,9 +23,59 @@ const GetUserCount = async () => {
       console.error('Error:', error);
     }    
   };  
-  //GetUserCount();
+
+
+  //Get events list api function
+const GetEventsCount = async () => {
+    try {
+      const response = await axios.post('/api/events/getevents');      
+        if (response.data.count.length !== 0) {
+            setTotalEvents(response.data.count[0][""]);
+        } else {
+            setTotalEvents(0);
+        }
+    } catch (error) {
+      console.error('Error:', error);
+    }    
+  };  
+
+
+  //Get enquiry list api function
+const GetEnquiryCount = async () => {
+    try {
+      const response = await axios.post('/api/enquiry/getenquiry');      
+        if (response.data.count.length !== 0) {
+            setTotalEnquiry(response.data.count[0][""]);
+        } else {
+            setTotalEnquiry(0);
+        }
+    } catch (error) {
+      console.error('Error:', error);
+    }    
+  };  
+
+   //Get services list api function
+const GetServiceCount = async () => {
+    try {
+      const response = await axios.post('/api/services/getservices');      
+        if (response.data.count.length !== 0) {
+            setTotalServices(response.data.count[0][""]);
+        } else {
+            setTotalServices(0);
+        }
+    } catch (error) {
+      console.error('Error:', error);
+    }    
+  };  
+
+
+
+
   useEffect(() => {    
-    GetUserCount();     
+    GetUserCount();   
+    GetEventsCount(); 
+    GetEnquiryCount();
+    GetServiceCount(); 
   }, []);
 
     return (
@@ -33,17 +86,17 @@ const GetUserCount = async () => {
                         <IconUsers className='text-success-main' />
                     </div>
                 </CardDataStats>
-                <CardDataStats title="Total Enquiry" total="2,500" bgColorClass="secondary.light">
+                <CardDataStats title="Total Enquiry" total={TotalEnquiry} bgColorClass="secondary.light">
                     <div className="">
                         <IconTicket className='text-secondary-main' />
                     </div>
                 </CardDataStats>
-                <CardDataStats title="Total Events" total="450" bgColorClass="warning.light">
+                <CardDataStats title="Total Events" total={TotalEvents} bgColorClass="warning.light">
                     <div className="">
                         <IconAddressBook className='text-warning-main' />
                     </div>
                 </CardDataStats>
-                <CardDataStats title="Total Services" total="81" bgColorClass="primary.light">
+                <CardDataStats title="Total Services" total={TotalServices} bgColorClass="primary.light">
                     <div className="">
                         <IconAtom className='text-primary-main' />
                     </div>

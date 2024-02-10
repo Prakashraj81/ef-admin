@@ -16,7 +16,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import DashboardCard from "../../../components/shared/DashboardCard";
-import { IconEdit, IconCirclePlus, IconTrashX } from "@tabler/icons-react";
+import { IconEdit, IconEyeEdit, IconCirclePlus, IconTrashX } from "@tabler/icons-react";
 import theme from "../../../components/shared/theme";
 import DeleteModal from "../../../components/modal/delete-modal";
 import Alert from '@mui/material/Alert';
@@ -205,10 +205,10 @@ export default function Blog() {
                     </Typography>
                     </TableCell>                   
                     <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
-                      <Image className="rounded-full mx-auto" src={"/uploads/events-category/" + EventCategoryList.EventCategoryImage} width={40} height={40} alt={EventCategoryList.EventCategoryImage} />
+                      <Image className="rounded-full mx-auto" src={"/events/" + EventCategoryList.EventCategoryImage} width={40} height={40} alt={EventCategoryList.EventCategoryImage} />
                     </TableCell>
                     <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
-                      <Typography>{"/uploads/events-category/" + EventCategoryList.EventCategoryImage}</Typography>
+                      <Typography>{EventCategoryList.EventCategoryName}</Typography>
                     </TableCell>
                     <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
                     <Typography>

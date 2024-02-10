@@ -1,5 +1,6 @@
-import React, {useState, UseEffect} from "react";
+import React, { useState, useEffect } from 'react';
 import Image from "next/image";
+import axios from 'axios';
 import FullLayout from "../../../components/layouts/full/FullLayout";
 import {
   Typography,
@@ -14,87 +15,117 @@ import {
   TablePagination,
   Tooltip,
 } from "@mui/material";
-import DeleteModal from "../../../components/modal/delete-modal";
-import { IconX } from '@tabler/icons-react';
-import { styled } from '@mui/material/styles';
-import IconButton from '@mui/material/IconButton';
 import DashboardCard from "../../../components/shared/DashboardCard";
 import { IconEdit, IconCirclePlus, IconTrashX } from "@tabler/icons-react";
 import theme from "../../../components/shared/theme";
+import DeleteModal from "../../../components/modal/delete-modal";
+import Alert from '@mui/material/Alert';
+import Backdrop from '@mui/material/Backdrop';
+import BackdropLoader from '../../../components/loader/backdrop-loader';
 import SuccessAlert from "../../../components/alert/success-alert";
 import AddService from "./add-service";
 
-const products = [
-  {
-    id: "1",
-    heading: "Blog heading",
-    image: "/images/favicon-mine-life.png",
-    date: "2023-06-05",
-    status: "Active",
-  },
-  {
-    id: "2",
-    heading: "Blog heading",
-    image: "/images/favicon-mine-life.png",
-    date: "2023-06-05",
-    status: "Active",
-  },
-  {
-    id: "2",
-    heading: "Blog heading",
-    image: "/images/profile/user-1.jpg",
-    date: "2023-06-05",
-    status: "InActive",
-  },
-];
-
-export default function Blog() {
+export default function ServiceList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
   let [EditModalOpen, setEditModalOpen] = React.useState(false);
+  let [EditValue, setEditValue] = React.useState([]);
+  let [ServiceList, setServiceList] = React.useState();
   let [ModalId, setModalId] = useState(0);
   let [DeleteModalOpen, setDeleteModalOpen] = React.useState(false);
   let [SuccessMsg, setSuccessMsg] = React.useState(false);
+  let [ShowLoader, setShowLoader] = useState(false);  
+  let [PageLoadStatus, setPageLoadStatus] = useState(true);    
 
-
-  const EditModalFunction = () => {
-    setEditModalOpen(true);
+  const EditModalFunction = (event) => {    
+    let EditId = event.currentTarget.id;
+    EditId = Number(atob(event.currentTarget.id));    
+    if(EditId !== 0){      
+      GetServiceList(EditId);            
+    }
+    else {      
+      setEditValue([]);
+      setEditModalOpen(true);
+    }    
   };
   const CloseModalFunction = () => {
     setEditModalOpen(false);
   };
 
-  //Edit function
-  const editList = (event) => {
-    let EditId = Number(atob(event.currentTarget.id));
-    if (EditId !== 0) {
-      setEditModalOpen(true);
-      setModalId(EditId);
-    }
-    else {
-      setEditModalOpen(false);
-      setModalId(0);
-    }
-  }
+  useEffect(() => {    
+    if(PageLoadStatus){
+      GetServiceList(0);      
+    }    
+  }, []);
 
-  const DeleteModalFunction = (event) => {
+
+  //Get service list api function
+  const GetServiceList = async (id) => {
+    setShowLoader(true);
+    try {
+      let data = { Id: id };  
+      if (id !== 0) {
+        const response = await axios.post('/api/services/select', data);
+        if (response.data.service.length !== 0) {
+          EditValue = response.data.service[0];
+          setEditValue(EditValue);
+          setEditModalOpen(true);
+          setShowLoader(false);
+        } else {
+          setEditModalOpen(false);
+          setShowLoader(false);
+          setEditValue([]);
+        }
+      } else {
+        const response = await axios.post('/api/services/select', data);
+        if (response.data.service.length !== 0) {
+          setServiceList(response.data.service);
+        } else {
+          setServiceList([]);
+        }
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+    setPageLoadStatus(false);
+    setShowLoader(false);
+  };    
+
+
+  //Delete modal popup open function
+  const DeleteModalFunction = async (event) => {
     let value = event.currentTarget.id;
-    let rowId = ModalId;
+    let data = { Id: ModalId };    
     if (value === "Yes") {
-      console.log(rowId);
       setDeleteModalOpen(false);
-      setSuccessMsg(true);
+      setShowLoader(true);
+        try {
+            const response = await axios.post('/api/services/delete', data);
+            setDeleteModalOpen(false);
+            if (response.data.message === "Service deleted successfully") {                
+                //Update service list
+                setSuccessMsg(true);
+                GetServiceList(0); 
+                setShowLoader(false);
+            } else {
+                console.log(response.data.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            console.log('Full Axios Error:', error.response);
+        }
+    } else {
+        setDeleteModalOpen(false);
+        setModalId(0);
     }
-    else {
-      setDeleteModalOpen(false);
-      setModalId(0);
-    }
-  };
+};
 
-  //Delete function
-  const deleteList = (event) => {
-    let DeleteId = Number(atob(event.currentTarget.id));
+  
+
+  //Delete service function api
+  const DeleteService = (event) => {
+    let DeleteId = 0;
+    DeleteId = Number(atob(event.currentTarget.id));
     if (DeleteId !== 0) {
       setDeleteModalOpen(true);
       setModalId(DeleteId);
@@ -102,18 +133,23 @@ export default function Blog() {
     else {
       setDeleteModalOpen(false);
       setModalId(0);
-    }
+    }    
   }
   return (
     <>
+    <>
+    {ShowLoader && (
+          <BackdropLoader ShowLoader={ShowLoader} />
+        )}
+      </>
     {SuccessMsg && (<SuccessAlert />)}
       {DeleteModalOpen && (
         <DeleteModal DeleteModalOpen={DeleteModalOpen} DeleteModalFunction={DeleteModalFunction} />
       )}
-      <AddService EditModalOpen={EditModalOpen} CloseModalFunction={CloseModalFunction}/>
+      <AddService EditValue={EditValue} EditModalOpen={EditModalOpen} CloseModalFunction={CloseModalFunction}/>
       <DashboardCard title="">
         <div className="block md:flex lg:flex xl:flex 2xl:flex justify-between items-center">
-          <Typography variant="h5">Blog list</Typography>
+          <Typography variant="h5">Service list</Typography>
           <Button onClick={EditModalFunction} className="flex justify-between items-center bg-blue-600 text-white hover:bg-blue-400"><IconCirclePlus className="pr-2" />Add Service</Button>
         </div>
 
@@ -128,12 +164,12 @@ export default function Blog() {
                 </TableCell>
                 <TableCell>
                   <Typography variant="subtitle2" fontWeight={600}>
-                    Image
+                    Service image
                   </Typography>
                 </TableCell>
                 <TableCell>
                   <Typography variant="subtitle2" fontWeight={600}>
-                    Heading
+                    Service heading
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -154,26 +190,33 @@ export default function Blog() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {products
+            {ServiceList && Array.isArray(ServiceList) ? (
+              ServiceList
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((product) => (
-                  <TableRow key={product.name} sx={{ border: "2px solid #f6f9fc" }}>
+                .map((serviceList, index) => (
+            <TableRow key={serviceList.ServiceHeading_1} sx={{ border: "2px solid #f6f9fc" }}>
                     <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
-                      <Typography>
-                        {product.id}
-                      </Typography>
+                    <Typography>
+                      {index + 1}
+                    </Typography>
+                    </TableCell>                   
+                    <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
+                    <Image className="rounded-full mx-auto" src={"/services/" + serviceList.Service_Image_1} width={40} height={40} alt={serviceList.Service_Image_1} />
                     </TableCell>
                     <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
-                      <Image className="rounded-full mx-auto" src={product.image} width={40} height={40} alt="Image" />
-                    </TableCell>
+                      <Typography>{serviceList.ServiceHeading_1}</Typography>
+                    </TableCell>                                 
                     <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
-                      <Typography>{product.heading}</Typography>
-                    </TableCell>
+                    <Typography>
+                      {new Date(serviceList.Date).toLocaleDateString('en-GB', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                      })}
+                    </Typography>
+                    </TableCell>                    
                     <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
-                      <Typography>{product.date}</Typography>
-                    </TableCell>
-                    <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
-                      {product.status === "Active" ? (
+                      {serviceList.Active === 1 ? (
                         <>
                           <Chip
                             className="text-xs"
@@ -182,7 +225,7 @@ export default function Blog() {
                               color: theme.palette.success.main,
                             }}
                             size="small"
-                            label={product.status}
+                            label={"Active"}
                           ></Chip>
                         </>
                       )
@@ -196,7 +239,7 @@ export default function Blog() {
                                 backgroundColor: theme.palette.error.light,
                                 color: theme.palette.error.main,
                               }}
-                              label={product.status}
+                              label={"InActive"}
                             ></Chip>
                           </>
                         )
@@ -204,23 +247,24 @@ export default function Blog() {
                     </TableCell>
                     <TableCell>
                       <div className="flex justify-between items-center">
-                        <Tooltip title="View" arrow>
-                          <IconEdit onClick={editList} id={btoa(product.id)} className="mx-auto text-primary-blue cursor-pointer" />
+                        <Tooltip title="Edit" arrow>
+                          <IconEdit onClick={EditModalFunction} id={btoa(serviceList.Id)} className="mx-auto text-primary-main cursor-pointer" />
                         </Tooltip>
                         <Tooltip title="Delete" arrow>
-                          <IconTrashX onClick={deleteList} id={btoa(product.id)} className="mx-auto text-error-main cursor-pointer" />
+                          <IconTrashX id={btoa(serviceList.Id)} onClick={DeleteService} className="mx-auto text-error-main cursor-pointer" />
                         </Tooltip>
                       </div>
                     </TableCell>
                   </TableRow>
-                ))}
+      ))
+  ) : null}
             </TableBody>
           </Table>
         </Box>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25, 50]}
           component="div"
-          count={products.length}
+          count={ServiceList ? ServiceList.length : 0}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={(event, newPage) => {
@@ -236,6 +280,6 @@ export default function Blog() {
   )
 }
 
-Blog.getLayout = function getLayout(page) {
+ServiceList.getLayout = function getLayout(page) {
   return <FullLayout>{page}</FullLayout>;
 };

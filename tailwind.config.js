@@ -12,6 +12,7 @@ module.exports = {
         'accent-7': '#333',
         success: '#0070f3',
         cyan: '#79FFE1',
+        'red': 'red',
         'custom-light':'#fcaadc6b',
         'custom-form-light':'#fcaadc4a',
         'custom-black':'#414141',

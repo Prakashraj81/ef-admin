@@ -1,11 +1,8 @@
 {
-  "/_error": "pages/_error.js",
   "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/admin/event-category/event-category": "pages/admin/event-category/event-category.js",
-  "/api/event-category/delete": "pages/api/event-category/delete.js",
-  "/admin/Dashborad": "pages/admin/Dashborad.js",
-  "/api/event-category/select": "pages/api/event-category/select.js",
-  "/api/auth/getuser": "pages/api/auth/getuser.js",
-  "/admin/events/events": "pages/admin/events/events.js"
+  "/admin/enquiry/mobile-enquiry": "pages/admin/enquiry/mobile-enquiry.js",
+  "/admin/enquiry/add-enquiry": "pages/admin/enquiry/add-enquiry.js",
+  "/admin/enquiry/email-enquiry": "pages/admin/enquiry/email-enquiry.js"
 }

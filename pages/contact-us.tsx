@@ -1,4 +1,3 @@
-import type { ReactElement } from 'react';
 import Link from "next/link";
 import Image from "next/image";
 import WhyEftapei from "../components/why-eftapei";
@@ -98,6 +97,6 @@ export default function ContactUs() {
     )
 }
 
-ContactUs.getLayout = function getLayout(page: ReactElement) {
+ContactUs.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
