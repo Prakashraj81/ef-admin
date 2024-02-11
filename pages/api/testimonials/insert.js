@@ -6,11 +6,11 @@ export default async (req, res) => {
     try {
       await sql.connect(config);
       if(Id !== 0){
-        await sql.query`Update TestimonialsMaster set Date=${ReviewDate}, CustomerName=${CustomerName}, City=${City}, Message=${Contents}, Rating=${AvgRating}, StarRating=${AvgRating}, Active=${1}, Modified_Date=${ReviewDate}, Modified_By=${"Admin"} where Id=${Id}`;        
+        await sql.query`Update testimonials_master set date=${ReviewDate}, customer_name=${CustomerName}, city=${City}, message=${Contents}, rating=${AvgRating}, star_rating=${AvgRating}, active=${1}, modified_date=${ReviewDate}, modified_by=${"Admin"} where id=${Id}`;        
         res.status(200).json({ message: 'Testimonial updated successfully' });
       }
       else {
-        await sql.query`Insert into TestimonialsMaster (Date, CustomerName, City, Message, Rating, StarRating, Status, Active, Created_Date, Creadted_By) values (${ReviewDate}, ${CustomerName}, ${City}, ${Contents}, ${AvgRating}, ${AvgRating}, ${"1"}, ${1}, ${ReviewDate}, ${"Admin"})`;
+        await sql.query`Insert into testimonials_master (date, customer_name, city, message, rating, star_rating, status, active, created_date, creadted_by) values (${ReviewDate}, ${CustomerName}, ${City}, ${Contents}, ${AvgRating}, ${AvgRating}, ${"1"}, ${1}, ${ReviewDate}, ${"Admin"})`;
        res.status(200).json({ message: 'Testimonial inserted successfully' });
       }      
   } catch (error) {

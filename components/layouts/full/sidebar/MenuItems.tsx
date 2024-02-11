@@ -67,7 +67,7 @@ const Menuitems = [
   
   {
     navlabel: true,
-    subheader: 'SUPPORT MANAGEMENT',
+    subheader: 'ENQUIRY MANAGEMENT',
   },
   // {
   //   id: uniqueId(),

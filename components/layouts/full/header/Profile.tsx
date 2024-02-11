@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from 'next/router';
 import Link from "next/link";
 import {
   Avatar,
@@ -21,6 +22,14 @@ const Profile = () => {
   const handleClose2 = () => {
     setAnchorEl2(null);
   };
+
+  //Logout function
+  const router = useRouter();
+  const Logout =()=>{
+    sessionStorage.setItem("Auth", "0");
+    sessionStorage.setItem("AuthRights", "");
+    router.push(`/admin/auth/login`);
+  }
 
   return (
     <Box>
@@ -83,10 +92,11 @@ const Profile = () => {
         </MenuItem>
         <Box mt={1} py={1} px={2}>
           <Button
-            href="/admin/auth/login"
+            // href="/admin/auth/login"
+            onClick={Logout}
             variant="outlined"
             color="primary"
-            component={Link}
+            // component={Link}
             fullWidth
           >
             Logout

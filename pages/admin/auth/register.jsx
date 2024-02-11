@@ -18,6 +18,7 @@ const AdminRegister = () => {
   let [PhoneNo, sePhoneNo] = useState("");
   let [Password, setPassword] = useState("");
   let [ConfirmPassword, setConfirmPassword] = useState(""); 
+  let [AuthorityRights, setAuthorityRights] = useState("");
   let [CurrentDate, setCurrentDate] = useState("");
 
   let [LoginError, setLoginError] = useState(false);
@@ -39,16 +40,8 @@ const AdminRegister = () => {
   let [PhoneNoError, setPhoneNoError] = useState(false);
   let [PasswordError, setPasswordError] = useState(false);
   let [ConfirmPasswordError, setConfirmPasswordError] = useState(false);
-  let [ShowPasswordError, setShowPasswordError] = useState(false);
-  
-  let defaultValues = {
-    Name:Name,
-    Email:Email,
-    PhoneNo:PhoneNo,
-    Password:Password,
-    ConfirmPassword:ConfirmPassword,    
-    Created_Date: CurrentDate,    
-  };
+  let [AuthorityRightsError, setAuthorityRightsError] = useState(false);
+  let [ShowPasswordError, setShowPasswordError] = useState(false);  
   
   const onChangeInput = (event) => {
       let InputId = event.currentTarget.id;
@@ -71,17 +64,41 @@ const AdminRegister = () => {
         setPassword(Value);
         setPasswordError(false);
         setShowPasswordError(false);
-      }
+      }      
       else {
         setConfirmPassword(Value);
         setConfirmPasswordError(false);
-        setShowPasswordError(false);
+        setShowPasswordError(false);      
       }
   };
+
+  const onChangeAuthority = (event) =>{
+    var InputId = event.currentTarget.id;
+    var Value = event.target.value;
+    isSumbitDisabled = false;
+    if(Value === ""){
+      setAuthorityRightsError(true);
+    }
+    else{
+      setAuthorityRights(Value);
+      setAuthorityRightsError(false);
+    }   
+  }
+
+  let defaultValues = {};
   
   //Submit API function 
   const router = useRouter();
-  const OnSubmit = async (defaultValues) => {  
+  const OnSubmit = async (defaultValues) => { 
+    defaultValues = {
+      Name:Name,
+      Email:Email,
+      PhoneNo:PhoneNo,
+      Password:Password,
+      ConfirmPassword:ConfirmPassword, 
+      AuthorityRights: AuthorityRights,   
+      Created_Date: CurrentDate,    
+    }; 
       setShowLoader(true);    
       if(defaultValues.Name === ""){
         isSumbitDisabled = true;
@@ -103,19 +120,23 @@ const AdminRegister = () => {
         isSumbitDisabled = true;
         setConfirmPasswordError(true);
       }
-      if (defaultValues.ConfirmPassword !== defaultValues.ConfirmPassword) {
+      if (defaultValues.Password !== defaultValues.ConfirmPassword) {
         isSumbitDisabled = true;
         setShowPasswordError(true);
       }
+      if (defaultValues.AuthorityRights === "") {
+        isSumbitDisabled = true;
+        setAuthorityRightsError(true);
+      }      
     //Api setup
     if (isSumbitDisabled !== true) {
         console.log("API allowed");
         try {
-          await axios.post('/api/auth/insert', { Name, Email, PhoneNo, Password, CurrentDate });
+          await axios.post('/api/auth/insert', { Name, Email, PhoneNo, Password, AuthorityRights, CurrentDate });
           console.log('Auth inserted successfully');
           setLoginError(false);
           setShowLoader(false);
-          router.push(`/auth/login`);  
+          router.push(`/admin/auth/login`);  
         } catch (error) {
           setLoginError(true);
           setShowLoader(false);
@@ -132,7 +153,7 @@ const AdminRegister = () => {
   
 
   return (
-<PageContainer title="Register" description="this is Register page">
+    <PageContainer title="Register" description="this is Register page">
 
               <>
                 {ShowLoader && (
@@ -179,7 +200,7 @@ const AdminRegister = () => {
               />
             </Box>
             <>
-  {LoginError && (
+          {LoginError && (
                   <Stack className="py-5" sx={{ width: '100%' }} spacing={2}>
                     <Alert className="bg-custom-form-light" severity="error">User name or password is incorrect</Alert>
                   </Stack>
@@ -190,46 +211,57 @@ const AdminRegister = () => {
                 fontWeight={600} component="label" mb="5px">Name</Typography>
               <CustomTextField onChange={onChangeInput} value={Name} id="Name" variant="outlined" fullWidth />
               {NameError && (
-                <p className="text-red-500" role="alert">This field required</p>
+                <p className="text-red" role="alert">This field required</p>
               )}
               <Typography variant="subtitle1"              
-              fontWeight={600} component="label" mb="5px" mt="25px">Email Address</Typography>
+              fontWeight={600} component="label" mb="5px" mt="7px">Email Address</Typography>
               <CustomTextField onChange={onChangeInput} value={Email} id="Email" variant="outlined" fullWidth />
               {EmailError && (
-                <p className="text-red-500" role="alert">This field required</p>
+                <p className="text-red" role="alert">This field required</p>
               )}
               <Typography variant="subtitle1"              
-              fontWeight={600} component="label" mb="5px" mt="25px">Phone No</Typography>
+              fontWeight={600} component="label" mb="5px" mt="7px">Phone No</Typography>
               <CustomTextField onChange={onChangeInput} value={PhoneNo} id="PhoneNo" variant="outlined" fullWidth />
               {PhoneNoError && (
-                <p className="text-red-500" role="alert">This field required</p>
+                <p className="text-red" role="alert">This field required</p>
               )}
               <Typography variant="subtitle1"              
-                fontWeight={600} component="label" mb="5px" mt="25px">Password</Typography>
-              <CustomTextField onChange={onChangeInput} value={Password} id="Password" variant="outlined" fullWidth />
+                fontWeight={600} component="label" mb="5px" mt="7px">Password</Typography>
+              <CustomTextField onChange={onChangeInput} type="password" value={Password} id="Password" variant="outlined" fullWidth />
               {PasswordError && (
-                <p className="text-red-500" role="alert">This field required</p>
+                <p className="text-red" role="alert">This field required</p>
               )}
               <Typography variant="subtitle1"              
-                fontWeight={600} component="label" mb="5px" mt="25px">Confirm Password</Typography>
-              <CustomTextField onChange={onChangeInput} value={ConfirmPassword} id="ConfirmPassword" variant="outlined" fullWidth />
+                fontWeight={600} component="label" mb="5px" mt="7px">Confirm Password</Typography>
+              <CustomTextField onChange={onChangeInput} type="password" value={ConfirmPassword} id="ConfirmPassword" variant="outlined" fullWidth />
               {ConfirmPasswordError && (
-                <p className="text-red-500" role="alert">This field required</p>
+                <p className="text-red" role="alert">This field required</p>
+              )}
+              <Typography variant="subtitle1"              
+                fontWeight={600} component="label" mb="5px" mt="7px">Authority rights</Typography>
+                <select onChange={onChangeAuthority} className='w-full p-3 custom-text-area' id="AuthorityRights" variant="outlined" fullWidth>
+                    <option value='' id=''>Select authority rights</option>
+                    <option value='Admin' id='Admin'>Admin</option>
+                    <option value='Employee' id='Employee'>Employee</option>
+                </select>  
+              {AuthorityRightsError && (
+                <p className="text-red" role="alert">This field required</p>
               )}
             </Stack>
             {ShowPasswordError && (
-                <p className="text-red-500 py-3" role="alert">Passwords do not match.</p>
+                <p className="text-red py-3" role="alert">Passwords do not match.</p>
               )}
             <Button className="bg-primary-color text-white" variant="contained" size="large" fullWidth onClick={OnSubmit}>
               Sign Up
             </Button>
 
             <Stack direction="row" justifyContent="center" spacing={1} mt={3}>
-              <Typography color="textSecondary" variant="h6" fontWeight="400">
+              <Typography className="text-sm" color="textSecondary" variant="h6" fontWeight="400">
                 Already have an Account?
               </Typography>
               <Typography
                 component={Link}
+                className="text-sm"
                 href="/admin/auth/login"
                 fontWeight="500"
                 sx={{

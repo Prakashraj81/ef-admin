@@ -6,9 +6,9 @@ export default async (req, res) => {
     await sql.connect(config);
     let result;
     if (Id !== 0) {
-      result = await sql.query`Select * from TestimonialsMaster where Id=${Id}`;
+      result = await sql.query`Select * from testimonials_master where id=${Id}`;
     } else {
-      result = await sql.query`Select * from TestimonialsMaster`;
+      result = await sql.query`Select * from testimonials_master`;
     }
 
     if (result.recordset.length !== 0) {

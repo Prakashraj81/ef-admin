@@ -3,7 +3,7 @@ import { sql, config } from '/config';
 export default async (req, res) => {
   try {
     await sql.connect(config);
-    let result = await sql.query`Select count(Id) from EventMaster`;    
+    let result = await sql.query`Select count(id) from event_master`;    
     if (result.recordset.length !== 0) {
       const count = result.recordset;
       res.status(200).json({ count });

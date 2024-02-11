@@ -18,39 +18,23 @@ let config = {
     database: process.env.DATABASE, 
     options: {
         encrypt: true,
+        port: 1433, 
         trustServerCertificate: true, 
     },
+    // user: 'sa',
+    // password: '@Prakashraj81',
+    // server: '127.0.0.1\\GJN', 
+    // database: 'database_ef',
+    // options: {
+    //   trustServerCertificate: true,
+    //   port: 1433,
+    // },
 };
-
-
-// const storage = multer.diskStorage({
-//     destination: 'D:/Prakashraj/Prakashraj_A/ef-admin/uploads',
-//     filename: (req, file, cb) => {
-//       const ext = path.extname(file.originalname);
-//       cb(null, Date.now() + ext);
-//       console.log("ext", ext);
-//     },
-//   });
-  
-//   const upload = multer({ storage });
-  
-//   app.use(express.json());
-//   app.use(express.urlencoded({ extended: true }));
-  
-//   app.post('/api/post/insert', upload.single('image'), (req, res) => {
-//     if (!req.file) {
-//       return res.status(400).json({ error: 'No file uploaded.' });
-//     } 
-//     return res.status(200).json({ message: 'Image uploaded successfully' });
-//   });
-
   
 
-
-app.listen(4000, () => {
+app.listen(3000, () => {
     console.log('API server is listening on port 3000');
 });
-
 
 module.exports = {
     sql,

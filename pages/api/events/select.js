@@ -6,9 +6,9 @@ export default async (req, res) => {
     await sql.connect(config);
     let result;
     if (Id !== 0) {
-      result = await sql.query`Select * from EventMaster where Id=${Id}`;
+      result = await sql.query`Select * from event_master where id=${Id}`;
     } else {
-      result = await sql.query`Select Id, Date, EventCategoryRefId, EventHeading, EventName, EventImage, EventAmount, EventClassCount, EventMembers, EventRating, EventStarRating, Status, Active, (select EventCategoryName from EventCategoryMaster where Id=EventCategoryRefId) as EventCategoryName from EventMaster`;
+      result = await sql.query`Select id, date, event_category_ref_id, event_heading, event_name, event_image, event_amount, event_class_count, event_members, event_rating, event_star_rating, status, active, (select event_category_name from event_category_master where id=event_category_ref_id) as event_category_name from event_master`;
     }
 
     if (result.recordset.length !== 0) {

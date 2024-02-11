@@ -12,10 +12,10 @@ export default async (req, res) => {
         try {
             await sql.connect(config);
             if(Id !== 0) {
-                await sql.query`UPDATE Authentication SET Name=${Name}, Email=${Email}, PhoneNo=${PhoneNo}, Password=${Password}, OTP=${"123456"}, SessionStatus=${"1"}, Active=${1}, Modified_Date=${Created_Date}, Modified_By=${"Admin"} WHERE Id=${Id}`;
+                await sql.query`UPDATE authentication_master SET name=${Name}, email=${Email}, phone_number=${PhoneNo}, password=${Password}, auth_rights=${"123456"}, session_status=${"1"}, active=${1}, modified_date=${Created_Date}, modified_by=${"Admin"} WHERE id=${Id}`;
             }
             else{
-                await sql.query`Insert into Authentication (Name, Email, PhoneNo, Password, OTP, SessionStatus, Active, Created_Date, Creadted_By) values (${Name}, ${Email}, ${PhoneNo}, ${Password}, ${"123456"}, ${"1"}, ${1}, ${Created_Date}, ${"Admin"})`;
+                await sql.query`Insert into authentication_master (name, email, phone_number, password, auth_rights, session_status, active, created_date, creadted_by) values (${Name}, ${Email}, ${PhoneNo}, ${Password}, ${"123456"}, ${"1"}, ${1}, ${Created_Date}, ${"Admin"})`;
             }            
             res.status(200).json({ message: 'User inserted successfully' });
         } catch (error) {

@@ -17,9 +17,9 @@ export default async (req, res) => {
     let {UserName, Password} = req.body;
     try {
         await sql.connect(config);
-        let result = await sql.query`Select Id from Authentication where PhoneNo=${UserName} and Password=${Password} and Active=1`;
+        let result = await sql.query`Select id, auth_rights from authentication_master where phone_number=${UserName} and password=${Password} and active=1`;
         if(result.recordset.length === 0) {
-            result = await sql.query`Select Id from Authentication where Email=${UserName} and Password=${Password} and Active=1`;
+            result = await sql.query`Select id, auth_rights from authentication_master where email=${UserName} and password=${Password} and active=1`;
         }     
         if (result.recordset.length !== 0) {           
             const user = result.recordset[0];

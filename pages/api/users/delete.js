@@ -7,9 +7,9 @@ export default async (req, res) => {
         try {
             await sql.connect(config);
             await sql.query`
-                UPDATE Authentication
-                SET Active=${2}, Modified_By=${"Admin"}
-                WHERE Id=${Id}`;
+                UPDATE authentication_master
+                SET active=${2}, modified_by=${"Admin"}
+                WHERE id=${Id}`;
             res.status(200).json({ message: 'User deleted successfully' });
         } catch (error) {
             console.error('Error updating:', error);

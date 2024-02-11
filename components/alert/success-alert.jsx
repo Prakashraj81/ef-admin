@@ -35,7 +35,11 @@ export default function SuccessAlert() {
                         <IconX fontSize="inherit" />
                     </IconButton>
                 }
-                sx={{ mb: 2 }}
+                sx={{ 
+                    mb: 2, 
+                    color: "success.main",
+                    backgroundColor: "success.light",
+                }}
                         >
                     <Typography className="success-main" color="inherit" size="small">Enquiry form saved successfully!</Typography>
                 </Alert>          

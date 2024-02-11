@@ -3,7 +3,7 @@ import { sql, config } from '/config';
 export default async (req, res) => {
   try {
     await sql.connect(config);
-    let result = await sql.query`Select * from EventCategoryMaster where Active=1`;    
+    let result = await sql.query`Select * from event_category_master where active=1`;    
     if (result.recordset.length !== 0) {
       const eventcategory = result.recordset;
       res.status(200).json({ eventcategory });

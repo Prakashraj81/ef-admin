@@ -6,9 +6,9 @@ export default async (req, res) => {
     await sql.connect(config);
     let result;
     if (Id !== 0) {
-      result = await sql.query`Select * from EventCategoryMaster where Id=${Id}`;
+      result = await sql.query`Select * from event_category_master where id=${Id}`;
     } else {
-      result = await sql.query`Select * from EventCategoryMaster`;
+      result = await sql.query`Select * from event_category_master`;
     }
 
     if (result.recordset.length !== 0) {

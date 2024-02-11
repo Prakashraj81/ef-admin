@@ -65,36 +65,35 @@ const AdminLogin = () => {
     if (isSumbitDisabled !== true) {        
       await axios.post('/api/auth/select', defaultValues)
           .then(response => {
-            console.log(response.data);
-            sessionStorage.setItem('Auth', response.data.user.Id);
-            setLoginError(false);
-            setShowLoader(false);
-            router.push(`/admin`);   
+            sessionStorage.setItem('Auth', response.data.user.id);
+            sessionStorage.setItem('AuthRights', response.data.user.auth_rights);
+            setLoginError(false);      
+            if(response.data.user.auth_rights === "Admin"){
+              router.push(`/admin/Dashborad`); 
+            } 
+            else{
+              router.push(`/enquiry/EnquiryDashborad`); 
+            }             
+            setShowLoader(false);  
           })
           .catch(error => {
             setLoginError(true);
-            setShowLoader(true);
+            setShowLoader(false);
             console.error('Error:', error);            
           });        
     }
     else {        
         setisSumbitDisabled(true);
+        setShowLoader(false);
     }
   };
   return (
-    <PageContainer title="Login">
+    <PageContainer title="Login">              
       <>
-                {LoginError && (
-                  <Stack className="pb-5" sx={{ width: '100%' }} spacing={2}>
-                    <Alert severity="error">User name or password is incorrect</Alert>
-                  </Stack>
-                )}
-              </>
-              <>
-                {ShowLoader && (
-                  <BackdropLoader ShowLoader={ShowLoader} />
-                )}
-              </>
+        {ShowLoader && (
+          <BackdropLoader ShowLoader={ShowLoader} />
+        )}
+      </>
       <Box
         sx={{
           position: 'relative',
@@ -133,12 +132,24 @@ const AdminLogin = () => {
                 />
               </Box>
               <Stack>
-                <Box>               
+              <>
+                {LoginError && (
+                  <Stack className="py-5 error-main" sx={{ width: '100%' }} spacing={2}>
+                    <Alert sx={{
+                      textDecoration: "none",
+                      color: "error.main",
+                      backgroundColor: "error.light",
+                    }} severity="error">User name or password is incorrect</Alert>
+                  </Stack>
+                )}
+              </>
+
+              <Box>               
               <Typography variant="subtitle1"                
               fontWeight={600} component="label" mb="5px">Email or Phone</Typography>
               <CustomTextField onChange={onChangeInput} value={UserName} id="UserName" variant="outlined" fullWidth />
               {UserNameError && (
-                <p className="text-red-500" role="alert">This field required</p>
+                <p className="text-red" role="alert">This field required</p>
               )}
                 </Box>
                 <Box mt="25px">
@@ -152,7 +163,7 @@ const AdminLogin = () => {
                   </Typography>
                   <CustomTextField onChange={onChangeInput} value={Password} id="Password" type="password" variant="outlined" fullWidth />
                   {PasswordError && (
-                <p className="text-red-500" role="alert">This field required</p>
+                <p className="text-red" role="alert">This field required</p>
               )}
                 </Box>
                 <Stack
@@ -164,10 +175,10 @@ const AdminLogin = () => {
                   <FormGroup>
                     <FormControlLabel
                       control={<Checkbox defaultChecked />}
-                      label="Remeber this Device"
+                      label="Remeber me"
                     />
                   </FormGroup>
-                  <Typography
+                  {/* <Typography
                     component={Link}
                     href="/"
                     fontWeight="500"
@@ -177,7 +188,7 @@ const AdminLogin = () => {
                     }}
                   >
                     Forgot Password ?
-                  </Typography>
+                  </Typography> */}
                 </Stack>
               </Stack>
               <Box>               
@@ -186,11 +197,12 @@ const AdminLogin = () => {
             </Button>
               </Box>
               <Stack direction="row" spacing={1} justifyContent="center" mt={3}>
-                <Typography color="textSecondary" variant="h6" fontWeight="500">
+                <Typography color="textSecondary" className="text-sm" variant="h6" fontWeight="500">
                   New to Eftapei?
                 </Typography>
                 <Typography
                   component={Link}
+                  className="text-sm"
                   href="/admin/auth/register"
                   fontWeight="500"
                   sx={{

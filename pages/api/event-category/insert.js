@@ -6,11 +6,11 @@ export default async (req, res) => {
     try {
       await sql.connect(config);
       if(Id !== 0){
-        await sql.query`Update EventCategoryMaster set Date=${EventDate}, EventCategoryName=${EventCategoryName}, EventCategoryImage=${EventCategoryImage}, Active=${1}, Modified_Date=${EventDate}, Modified_By=${"Admin"} where Id=${Id}`;        
+        await sql.query`Update event_category_master set date=${EventDate}, event_category_name=${EventCategoryName}, event_category_image=${EventCategoryImage}, active=${1}, modified_date=${EventDate}, modified_by=${"Admin"} where id=${Id}`;        
         res.status(200).json({ message: 'Event category updated successfully' });
       }
       else {
-        await sql.query`Insert into EventCategoryMaster (Date, EventCategoryName, EventCategoryImage, Status, Active, Created_Date, Creadted_By) values (${EventDate}, ${EventCategoryName}, ${EventCategoryImage}, ${EventCategoryImage}, ${1}, ${EventDate}, ${"Admin"})`;
+        await sql.query`Insert into event_category_master (date, event_category_name, event_category_image, status, active, created_date, creadted_by) values (${EventDate}, ${EventCategoryName}, ${EventCategoryImage}, ${EventCategoryImage}, ${1}, ${EventDate}, ${"Admin"})`;
        res.status(200).json({ message: 'Event category inserted successfully' });
       }      
   } catch (error) {

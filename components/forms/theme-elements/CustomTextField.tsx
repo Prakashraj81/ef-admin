@@ -2,7 +2,7 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 import { TextField } from '@mui/material';
 
-const CustomTextField = styled((props: any) => <TextField {...props} />)(({ theme }) => ({
+const CustomTextField = styled((props: any) => <TextField {...props} />)(({ theme, FirstNameError, LastNameError, EnquiryTypeError }) => ({
   '& .MuiOutlinedInput-input::-webkit-input-placeholder': {
     color: theme.palette.text.secondary,
     opacity: '0.8',
@@ -12,8 +12,8 @@ const CustomTextField = styled((props: any) => <TextField {...props} />)(({ them
     opacity: '1',
   },
   '& .Mui-disabled .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme.palette.grey[200],
-  },
+    borderColor: FirstNameError ? theme.palette.error.main : theme.palette.grey[500],
+  },  
 }));
 
 export default CustomTextField;

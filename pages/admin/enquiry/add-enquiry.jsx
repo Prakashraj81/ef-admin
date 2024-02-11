@@ -484,7 +484,6 @@ export default function AddEnquiryPage() {
     </>
   )
 }
-
 AddEnquiryPage.getLayout = function getLayout(page) {
-  return <FullLayout>{page}</FullLayout>;
+    return <FullLayout>{page}</FullLayout>;
 };

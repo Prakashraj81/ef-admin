@@ -7,9 +7,9 @@ export default async (req, res) => {
         try {
             await sql.connect(config);
             await sql.query`
-                UPDATE EventCategoryMaster
-                SET Active=${2}, Modified_By=${"Admin"}
-                WHERE Id=${Id}`;
+                UPDATE event_category_master
+                SET active=${2}, modified_by=${"Admin"}
+                WHERE id=${Id}`;
             res.status(200).json({ message: 'Event category deleted successfully' });
         } catch (error) {
             console.error('Error updating:', error);
