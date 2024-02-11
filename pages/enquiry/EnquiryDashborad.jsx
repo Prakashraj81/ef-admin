@@ -529,7 +529,7 @@ export default function EnquiryDashborad() {
                     <button 
                     onClick={InsertEnquiryForm}                
                     className="px-5 py-1 bg-primary-main text-white hover:bg-white border hover:border-primary-main hover:text-primary-main rounded-sm transition duration-300 delay-150">
-                        Save
+                        Submit
                     </button>
                 </DialogActions>     
                 <DialogActions className="float-right px-10">                
