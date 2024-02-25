@@ -199,23 +199,23 @@ export default function UserListPage() {
     UserList
       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
       .map((UserList, index) => (
-        <TableRow key={UserList.Name} sx={{ border: "2px solid #f6f9fc" }}>
+        <TableRow key={UserList.name} sx={{ border: "2px solid #f6f9fc" }}>
                     <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
                     <Typography>
                       {index + 1}
                     </Typography>
                     </TableCell>                   
                     <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
-                      <Typography>{UserList.Name}</Typography>
+                      <Typography>{UserList.name}</Typography>
                     </TableCell>
                     <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
-                      <Typography>{UserList.Email}</Typography>
+                      <Typography>{UserList.email}</Typography>
                     </TableCell>
                     <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
-                      <Typography>{UserList.PhoneNo}</Typography>
+                      <Typography>{UserList.phone_number}</Typography>
                     </TableCell>                    
                     <TableCell sx={{ borderRight: "2px solid #f6f9fc" }}>
-                      {UserList.Active === 1 ? (
+                      {UserList.active === 1 ? (
                         <>
                           <Chip
                             className="text-xs"
@@ -247,10 +247,10 @@ export default function UserListPage() {
                     <TableCell>
                       <div className="flex justify-between items-center">
                         <Tooltip title="Edit" arrow>
-                          <IconEdit onClick={EditModalFunction} id={btoa(UserList.Id)} className="mx-auto text-primary-main cursor-pointer" />
+                          <IconEdit onClick={EditModalFunction} id={btoa(UserList.id)} className="mx-auto text-primary-main cursor-pointer" />
                         </Tooltip>
                         <Tooltip title="Delete" arrow>
-                          <IconTrashX id={btoa(UserList.Id)} onClick={DeleteUser} className="mx-auto text-error-main cursor-pointer" />
+                          <IconTrashX id={btoa(UserList.id)} onClick={DeleteUser} className="mx-auto text-error-main cursor-pointer" />
                         </Tooltip>
                       </div>
                     </TableCell>

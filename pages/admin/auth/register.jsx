@@ -10,6 +10,7 @@ import BackdropLoader from '../../../components/loader/backdrop-loader';
 import BlankLayout from '../../../components/layouts/blank/BlankLayout'
 import PageContainer from '../../../components/container/PageContainer';
 import CustomTextField from '../../../components/Form/CustomTextField';
+import AuthOTPVerification from './auth-otp-verifiaction';
 import TextField from '@mui/material/TextField';
 
 const AdminRegister = () => {  
@@ -23,15 +24,21 @@ const AdminRegister = () => {
 
   let [LoginError, setLoginError] = useState(false);
   let [ShowLoader, setShowLoader] = useState(false);
+  let [ShowRegister, setShowRegister] = useState(true);
+  let [ShowAuthOTP, setShowAuthOTP] = useState(false);
 
-  useEffect(() => {
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth() + 1; // Months are 0-indexed, so add 1
-    const day = currentDate.getDate();
-    const formattedDate = `${year}-${month}-${day}`;
-    setCurrentDate(formattedDate);
-  }, []);  
+  // useEffect(() => {
+  //   const currentDate = new Date();
+  //   const year = currentDate.getFullYear();
+  //   const month = currentDate.getMonth() + 1; // Months are 0-indexed, so add 1
+  //   const day = currentDate.getDate();
+  //   const formattedDate = `${year}-${month}-${day}`;
+  //   setCurrentDate(formattedDate);
+  // }, []);  
+
+  // useEffect(() => {
+  //   console.log("Register", Name, Email, PhoneNo, Password, AuthorityRights, CurrentDate);
+  // }, [Name, Email, PhoneNo, Password, AuthorityRights, CurrentDate]);
 
   //Error state and button disabled
   let [isSumbitDisabled, setisSumbitDisabled] = useState(false);
@@ -130,13 +137,20 @@ const AdminRegister = () => {
       }      
     //Api setup
     if (isSumbitDisabled !== true) {
-        console.log("API allowed");
         try {
-          await axios.post('/api/auth/insert', { Name, Email, PhoneNo, Password, AuthorityRights, CurrentDate });
-          console.log('Auth inserted successfully');
-          setLoginError(false);
-          setShowLoader(false);
-          router.push(`/admin/auth/login`);  
+          //await axios.post('/api/auth/insert', { Name, Email, PhoneNo, Password, AuthorityRights, CurrentDate });
+          const response = await axios.post('/api/auth/auth-otp-verification-email', {Name, Email, PhoneNo, CurrentDate});
+          console.log(response.data);          
+          if(response.data.otp !== ""){
+            setLoginError(false);
+            setShowLoader(false);
+            setShowRegister(false);
+            setShowAuthOTP(true);
+            router.push('/admin/auth/auth-otp-verifiaction');
+          }
+          else{
+            setLoginError(true);
+          }
         } catch (error) {
           setLoginError(true);
           setShowLoader(false);
@@ -160,122 +174,138 @@ const AdminRegister = () => {
                   <BackdropLoader ShowLoader={ShowLoader} />
                 )}
               </>
-              <Box
-    className="bg-primary-light"
-      sx={{
-        position: 'relative',
-        '&:before': {
-          content: '""',
-          background: 'radial-gradient(#d2f1df, #d3d7fa, #bad8f4)',
-          backgroundSize: '400% 400%',
-          animation: 'gradient 15s ease infinite',
-          position: 'absolute',
-          height: '100%',
-          width: '100%',
-          opacity: '0.3',
-        },
-      }}
-    >
-      <Grid container spacing={0} justifyContent="center" sx={{ height: '100vh' }}>
-      
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          lg={4}
-          xl={3}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Card elevation={9} sx={{ p: 4, zIndex: 1, width: '100%', maxWidth: '500px' }}>
-            <Box display="flex" alignItems="center" justifyContent="center">
-              <Image
-                className="logo h-16"
-                src="/logo/header-logo.jpg"
-                alt="Eftapei"
-                width={180}
-                height={50}
-                priority
-              />
-            </Box>
-            <>
-          {LoginError && (
-                  <Stack className="py-5" sx={{ width: '100%' }} spacing={2}>
-                    <Alert className="bg-custom-form-light" severity="error">User name or password is incorrect</Alert>
-                  </Stack>
+              <>
+                {ShowAuthOTP && (
+                  <AuthOTPVerification
+                  authName={Name}
+                  authEmail={Email}
+                  authPhoneNo={PhoneNo}
+                  authPassword={Password}
+                  authAuthorityRights={AuthorityRights}
+                  authCurrentDate={CurrentDate}
+                />
                 )}
               </>
-            <Stack mb={3}>
-              <Typography variant="subtitle1"                
-                fontWeight={600} component="label" mb="5px">Name</Typography>
-              <CustomTextField onChange={onChangeInput} value={Name} id="Name" variant="outlined" fullWidth />
-              {NameError && (
-                <p className="text-red" role="alert">This field required</p>
+              <>
+              {ShowRegister &&(
+                <Box
+                className="bg-primary-light"
+                  sx={{
+                    position: 'relative',
+                    '&:before': {
+                      content: '""',
+                      background: 'radial-gradient(#d2f1df, #d3d7fa, #bad8f4)',
+                      backgroundSize: '400% 400%',
+                      animation: 'gradient 15s ease infinite',
+                      position: 'absolute',
+                      height: '100%',
+                      width: '100%',
+                      opacity: '0.3',
+                    },
+                  }}
+                >
+                  <Grid container spacing={0} justifyContent="center" sx={{ height: '100vh' }}>
+                  
+                    <Grid
+                      item
+                      xs={12}
+                      sm={12}
+                      lg={4}
+                      xl={3}
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                    >
+                      <Card elevation={9} sx={{ p: 4, zIndex: 1, width: '100%', maxWidth: '500px' }}>
+                        <Box display="flex" alignItems="center" justifyContent="center">
+                          <Image
+                            className="logo h-16"
+                            src="/logo/header-logo.jpg"
+                            alt="Eftapei"
+                            width={180}
+                            height={50}
+                            priority
+                          />
+                        </Box>
+                        <>
+                      {LoginError && (
+                              <Stack className="py-5" sx={{ width: '100%' }} spacing={2}>
+                                <Alert className="bg-custom-form-light" severity="error">User name or password is incorrect</Alert>
+                              </Stack>
+                            )}
+                          </>
+                        <Stack mb={3}>
+                          <Typography variant="subtitle1"                
+                            fontWeight={600} component="label" mb="5px">Name</Typography>
+                          <CustomTextField onChange={onChangeInput} value={Name} id="Name" variant="outlined" fullWidth />
+                          {NameError && (
+                            <p className="text-red" role="alert">This field required</p>
+                          )}
+                          <Typography variant="subtitle1"              
+                          fontWeight={600} component="label" mb="5px" mt="7px">Email Address</Typography>
+                          <CustomTextField onChange={onChangeInput} value={Email} id="Email" variant="outlined" fullWidth />
+                          {EmailError && (
+                            <p className="text-red" role="alert">This field required</p>
+                          )}
+                          <Typography variant="subtitle1"              
+                          fontWeight={600} component="label" mb="5px" mt="7px">Phone No</Typography>
+                          <CustomTextField onChange={onChangeInput} value={PhoneNo} id="PhoneNo" variant="outlined" fullWidth />
+                          {PhoneNoError && (
+                            <p className="text-red" role="alert">This field required</p>
+                          )}
+                          <Typography variant="subtitle1"              
+                            fontWeight={600} component="label" mb="5px" mt="7px">Password</Typography>
+                          <CustomTextField onChange={onChangeInput} type="password" value={Password} id="Password" variant="outlined" fullWidth />
+                          {PasswordError && (
+                            <p className="text-red" role="alert">This field required</p>
+                          )}
+                          <Typography variant="subtitle1"              
+                            fontWeight={600} component="label" mb="5px" mt="7px">Confirm Password</Typography>
+                          <CustomTextField onChange={onChangeInput} type="password" value={ConfirmPassword} id="ConfirmPassword" variant="outlined" fullWidth />
+                          {ConfirmPasswordError && (
+                            <p className="text-red" role="alert">This field required</p>
+                          )}
+                          <Typography variant="subtitle1"              
+                            fontWeight={600} component="label" mb="5px" mt="7px">Authority rights</Typography>
+                            <select onChange={onChangeAuthority} className='w-full p-3 custom-text-area' id="AuthorityRights" variant="outlined" fullWidth>
+                                <option value='' id=''>Select authority rights</option>
+                                <option value='Admin' id='Admin'>Admin</option>
+                                <option value='Employee' id='Employee'>Employee</option>
+                            </select>  
+                          {AuthorityRightsError && (
+                            <p className="text-red" role="alert">This field required</p>
+                          )}
+                        </Stack>
+                        {ShowPasswordError && (
+                            <p className="text-red py-3" role="alert">Passwords do not match.</p>
+                          )}
+                        <Button className="bg-primary-color text-white" variant="contained" size="large" fullWidth onClick={OnSubmit}>
+                          Sign Up
+                        </Button>
+            
+                        <Stack direction="row" justifyContent="center" spacing={1} mt={3}>
+                          <Typography className="text-sm" color="textSecondary" variant="h6" fontWeight="400">
+                            Already have an Account?
+                          </Typography>
+                          <Typography
+                            component={Link}
+                            className="text-sm"
+                            href="/admin/auth/login"
+                            fontWeight="500"
+                            sx={{
+                              textDecoration: 'none',
+                              color: 'primary.main',
+                            }}
+                          >
+                            Sign In
+                          </Typography>
+                        </Stack>
+                      </Card>
+                    </Grid>
+                  </Grid>
+                </Box>
               )}
-              <Typography variant="subtitle1"              
-              fontWeight={600} component="label" mb="5px" mt="7px">Email Address</Typography>
-              <CustomTextField onChange={onChangeInput} value={Email} id="Email" variant="outlined" fullWidth />
-              {EmailError && (
-                <p className="text-red" role="alert">This field required</p>
-              )}
-              <Typography variant="subtitle1"              
-              fontWeight={600} component="label" mb="5px" mt="7px">Phone No</Typography>
-              <CustomTextField onChange={onChangeInput} value={PhoneNo} id="PhoneNo" variant="outlined" fullWidth />
-              {PhoneNoError && (
-                <p className="text-red" role="alert">This field required</p>
-              )}
-              <Typography variant="subtitle1"              
-                fontWeight={600} component="label" mb="5px" mt="7px">Password</Typography>
-              <CustomTextField onChange={onChangeInput} type="password" value={Password} id="Password" variant="outlined" fullWidth />
-              {PasswordError && (
-                <p className="text-red" role="alert">This field required</p>
-              )}
-              <Typography variant="subtitle1"              
-                fontWeight={600} component="label" mb="5px" mt="7px">Confirm Password</Typography>
-              <CustomTextField onChange={onChangeInput} type="password" value={ConfirmPassword} id="ConfirmPassword" variant="outlined" fullWidth />
-              {ConfirmPasswordError && (
-                <p className="text-red" role="alert">This field required</p>
-              )}
-              <Typography variant="subtitle1"              
-                fontWeight={600} component="label" mb="5px" mt="7px">Authority rights</Typography>
-                <select onChange={onChangeAuthority} className='w-full p-3 custom-text-area' id="AuthorityRights" variant="outlined" fullWidth>
-                    <option value='' id=''>Select authority rights</option>
-                    <option value='Admin' id='Admin'>Admin</option>
-                    <option value='Employee' id='Employee'>Employee</option>
-                </select>  
-              {AuthorityRightsError && (
-                <p className="text-red" role="alert">This field required</p>
-              )}
-            </Stack>
-            {ShowPasswordError && (
-                <p className="text-red py-3" role="alert">Passwords do not match.</p>
-              )}
-            <Button className="bg-primary-color text-white" variant="contained" size="large" fullWidth onClick={OnSubmit}>
-              Sign Up
-            </Button>
-
-            <Stack direction="row" justifyContent="center" spacing={1} mt={3}>
-              <Typography className="text-sm" color="textSecondary" variant="h6" fontWeight="400">
-                Already have an Account?
-              </Typography>
-              <Typography
-                component={Link}
-                className="text-sm"
-                href="/admin/auth/login"
-                fontWeight="500"
-                sx={{
-                  textDecoration: 'none',
-                  color: 'primary.main',
-                }}
-              >
-                Sign In
-              </Typography>
-            </Stack>
-          </Card>
-        </Grid>
-      </Grid>
-    </Box>
+              </>
   </PageContainer>
   );
 };

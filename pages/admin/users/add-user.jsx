@@ -50,6 +50,7 @@ export default function AddUser({EditValue, EditModalOpen, CloseModalFunction}) 
   let [PhoneNo, setPhoneNo] = useState("");
   let [Password, setPassword] = useState("");
   let [ConfirmPassword, setConfirmPassword] = useState(""); 
+  let [AuthorityRights, setAuthorityRights] = useState("");
   let [CurrentDate, setCurrentDate] = useState("");
 
   let [LoginError, setLoginError] = useState(false);
@@ -63,6 +64,22 @@ export default function AddUser({EditValue, EditModalOpen, CloseModalFunction}) 
   let [PasswordError, setPasswordError] = useState(false);
   let [ConfirmPasswordError, setConfirmPasswordError] = useState(false);
   let [ShowPasswordError, setShowPasswordError] = useState(false);  
+  let [AuthorityRightsError, setAuthorityRightsError] = useState(false);
+
+  
+  const onChangeAuthority = (event) =>{
+    var InputId = event.currentTarget.id;
+    var Value = event.target.value;
+    isSumbitDisabled = false;
+    if(Value === ""){
+      setAuthorityRightsError(true);
+    }
+    else{
+      setAuthorityRights(Value);
+      setAuthorityRightsError(false);
+    }   
+  }
+
 
   const onChangeInput = (event) => {
       let InputId = event.currentTarget.id;
@@ -101,15 +118,15 @@ export default function AddUser({EditValue, EditModalOpen, CloseModalFunction}) 
     const day = currentDate.getDate();
     const formattedDate = `${year}-${month}-${day}`;
     setCurrentDate(formattedDate);  
-    console.log(formattedDate);  
     let defaultValues = {
         Id: UpdateUserId,
         Name:Name,
         Email:Email,
         PhoneNo:PhoneNo,
         Password:Password,
-        ConfirmPassword:ConfirmPassword,    
-        Created_Date: CurrentDate,    
+        ConfirmPassword:ConfirmPassword, 
+        AuthorityRights: AuthorityRights,   
+        CurrentDate: formattedDate,    
       };
       CloseModalFunction();
       setShowLoader(true);    
@@ -133,6 +150,10 @@ export default function AddUser({EditValue, EditModalOpen, CloseModalFunction}) 
         isSumbitDisabled = true;
         setConfirmPasswordError(true);
       }
+      if(defaultValues.AuthorityRights === ""){
+        isSumbitDisabled = true;
+        setAuthorityRightsError(true);
+      }
       if (defaultValues.ConfirmPassword === defaultValues.Password) {
         isSumbitDisabled = false;
         setShowPasswordError(false);
@@ -145,7 +166,7 @@ export default function AddUser({EditValue, EditModalOpen, CloseModalFunction}) 
     if (isSumbitDisabled !== true) {
         console.log("Id:" + Id)
         try {
-          await axios.post('/api/users/insert', { Id, Name, Email, PhoneNo, Password, CurrentDate });                
+          const resposnse = await axios.post('/api/users/insert', { Id, Name, Email, PhoneNo, Password, AuthorityRights, CurrentDate });                
           setLoginError(false);          
           setShowLoader(false);    
           setPageLoadStatus(false);            
@@ -167,43 +188,50 @@ export default function AddUser({EditValue, EditModalOpen, CloseModalFunction}) 
   function PageLoad(EditValue){
     useEffect(() => {          
         if(EditValue.length === 0){
+          setId(0);
           setName("");
           setEmail("");
           setPhoneNo("");
           setPassword("");
           setConfirmPassword("");  
+          setAuthorityRights("");
         } 
         else {
-          if(EditValue.Id !== 0){
-            setUpdateUserId(EditValue.Id);
-            setId(EditValue.Id);            
+          if(EditValue.id !== 0){
+            setUpdateUserId(EditValue.id);
+            setId(EditValue.id);            
         }
         else{
             setUpdateUserId(0);
             setId(0);            
         }
-        if (EditValue.Name !=="") {
-          setName(EditValue.Name);
+        if (EditValue.name !=="") {
+          setName(EditValue.name);
         } else {    
           setName('');
         }
-        if (EditValue.Email !=="") {
-            setEmail(EditValue.Email);
+        if (EditValue.email !=="") {
+            setEmail(EditValue.email);
           } else {       
             setEmail('');
           }
-          if (EditValue.PhoneNo !=="") {
-            setPhoneNo(EditValue.PhoneNo);
+          if (EditValue.phone_number !=="") {
+            setPhoneNo(EditValue.phone_number);
           } else {    
             setPhoneNo('');
           }
-          if (EditValue.Password !=="") {
-            setPassword(EditValue.Password);
-            setConfirmPassword(EditValue.Password);
+          if (EditValue.password !=="") {
+            setPassword(EditValue.password);
+            setConfirmPassword(EditValue.password);
           } else {    
             setPassword('');
             setConfirmPassword('');
-          }     
+          }   
+          if (EditValue.auth_rights !=="") {
+            setAuthorityRights(EditValue.auth_rights);
+          } else {    
+            setAuthorityRights('');
+          }  
         }
       }, [EditValue]);
   }
@@ -313,6 +341,16 @@ export default function AddUser({EditValue, EditModalOpen, CloseModalFunction}) 
                 <p className="text-red-500" role="alert">This field required</p>
               )}
               </div>
+              <Typography variant="subtitle1"              
+                fontWeight={600} component="label" mb="5px" mt="7px">Authority rights</Typography>
+                <select onChange={onChangeAuthority} value={AuthorityRights} className='w-full p-3 custom-text-area' id="AuthorityRights" variant="outlined" fullWidth>
+                    <option value='' id=''>Select authority rights</option>
+                    <option value='Admin' id='Admin'>Admin</option>
+                    <option value='Employee' id='Employee'>Employee</option>
+                </select>  
+              {AuthorityRightsError && (
+                <p className="text-red" role="alert">This field required</p>
+              )}
             </Grid>
           </Box>
         </DialogContent>

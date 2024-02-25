@@ -22,15 +22,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/admin/enquiry/add-enquiry": [
+    "/admin/auth/auth-otp-verifiaction": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/admin/enquiry/add-enquiry.js"
-    ],
-    "/enquiry/EnquiryDashborad": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/enquiry/EnquiryDashborad.js"
+      "static/chunks/pages/admin/auth/auth-otp-verifiaction.js"
     ]
   },
   "ampFirstPages": []
