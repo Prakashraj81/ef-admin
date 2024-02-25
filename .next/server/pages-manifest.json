@@ -1,9 +1,0 @@
-{
-  "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
-  "/_document": "pages/_document.js",
-  "/admin/auth/register": "pages/admin/auth/register.js",
-  "/admin/auth/auth-otp-verifiaction": "pages/admin/auth/auth-otp-verifiaction.js",
-  "/api/auth/authotpselect": "pages/api/auth/authotpselect.js",
-  "/api/auth/insert": "pages/api/auth/insert.js"
-}
