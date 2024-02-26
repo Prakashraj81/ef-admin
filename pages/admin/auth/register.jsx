@@ -27,19 +27,16 @@ const AdminRegister = () => {
   let [ShowRegister, setShowRegister] = useState(true);
   let [ShowAuthOTP, setShowAuthOTP] = useState(false);
 
-  // useEffect(() => {
-  //   const currentDate = new Date();
-  //   const year = currentDate.getFullYear();
-  //   const month = currentDate.getMonth() + 1; // Months are 0-indexed, so add 1
-  //   const day = currentDate.getDate();
-  //   const formattedDate = `${year}-${month}-${day}`;
-  //   setCurrentDate(formattedDate);
-  // }, []);  
+  useEffect(() => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1; // Months are 0-indexed, so add 1
+    const day = currentDate.getDate();
+    const formattedDate = `${year}-${month}-${day}`;
+    setCurrentDate(formattedDate);
+  }, []);  
 
-  // useEffect(() => {
-  //   console.log("Register", Name, Email, PhoneNo, Password, AuthorityRights, CurrentDate);
-  // }, [Name, Email, PhoneNo, Password, AuthorityRights, CurrentDate]);
-
+ 
   //Error state and button disabled
   let [isSumbitDisabled, setisSumbitDisabled] = useState(false);
   let [NameError, setNameError] = useState(false);
@@ -135,18 +132,17 @@ const AdminRegister = () => {
         isSumbitDisabled = true;
         setAuthorityRightsError(true);
       }      
-    //Api setup
+    //Api setup (OTP verification)
     if (isSumbitDisabled !== true) {
         try {
-          //await axios.post('/api/auth/insert', { Name, Email, PhoneNo, Password, AuthorityRights, CurrentDate });
           const response = await axios.post('/api/auth/auth-otp-verification-email', {Name, Email, PhoneNo, CurrentDate});
           console.log(response.data);          
-          if(response.data.otp !== ""){
-            setLoginError(false);
-            setShowLoader(false);
+          if(response.data.otp !== ""){            
             setShowRegister(false);
             setShowAuthOTP(true);
-            router.push('/admin/auth/auth-otp-verifiaction');
+            setLoginError(false);
+            setShowLoader(false);
+            //router.push('/admin/auth/auth-otp-verifiaction');
           }
           else{
             setLoginError(true);
