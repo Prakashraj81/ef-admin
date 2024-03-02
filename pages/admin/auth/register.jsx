@@ -136,13 +136,11 @@ const AdminRegister = () => {
     if (isSumbitDisabled !== true) {
         try {
           const response = await axios.post('/api/auth/auth-otp-verification-email', {Name, Email, PhoneNo, CurrentDate});
-          console.log(response.data);          
           if(response.data.otp !== ""){            
             setShowRegister(false);
             setShowAuthOTP(true);
             setLoginError(false);
             setShowLoader(false);
-            //router.push('/admin/auth/auth-otp-verifiaction');
           }
           else{
             setLoginError(true);
