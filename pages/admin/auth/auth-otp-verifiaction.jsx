@@ -18,6 +18,7 @@ const AuthOTPVerification = (props) => {
   //Error state and button disabled
   let [isSumbitDisabled, setisSumbitDisabled] = useState(false);
   let [LoginError, setLoginError] = useState(false);
+  let [LoginError2, setLoginError2] = useState(false);
   let [ShowLoader, setShowLoader] = useState(false);
   let [EnterOTPError, setEnterOTPError] = useState(false);   
   
@@ -77,13 +78,13 @@ const AuthOTPVerification = (props) => {
         if (defaultValues.EnterOTP !== "") {
           const response = await axios.post('/api/auth/authotpselect', data);
           if(response.data.message === "OTP Verified"){
-            if(response.data.user[0].auth_otp === defaultValues.EnterOTP){
+            if(response.data.user[0].auth_otp === defaultValues.EnterOTP && response.data.otpVerifyMsg[0].otpStatus === "OTP is valid"){
               setLoginError(false); 
               UserRegister(authName, authEmail, authPhoneNo, authPassword, authAuthorityRights, authCurrentDate);  
             }   
             else{
               setShowLoader(false); 
-              setLoginError(true);
+              setLoginError2(true);
             }   
           }
           else{
@@ -93,6 +94,7 @@ const AuthOTPVerification = (props) => {
         }                    
       } catch (error) {
         setShowLoader(false); 
+        setLoginError(true);
         console.error('Error:', error);
       }         
     }
@@ -178,6 +180,15 @@ const AuthOTPVerification = (props) => {
                       color: "error.main",
                       backgroundColor: "error.light",
                     }} severity="error">Please enter valid OTP</Alert>
+                  </Stack>
+                )}
+                {LoginError2 && (
+                  <Stack className="py-5 error-main" sx={{ width: '100%' }} spacing={2}>
+                    <Alert sx={{
+                      textDecoration: "none",
+                      color: "error.main",
+                      backgroundColor: "error.light",
+                    }} severity="error">The OTP has expired</Alert>
                   </Stack>
                 )}
               </>

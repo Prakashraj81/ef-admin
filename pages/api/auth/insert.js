@@ -12,7 +12,7 @@ export default async (req, res) => {
     else{
         try {
             await sql.connect(config);
-            const query = `INSERT INTO authentication_master (name, email, phone_number, password, auth_rights, session_status, active, created_date, creadted_by) VALUES ('${Name}', '${Email}', '${PhoneNo}', '${Password}', '${AuthorityRights}', '1', ${Active}, '${CurrentDate}', 'Admin')`;
+            const query = `INSERT INTO authentication_master (name, email, phone_number, password, auth_rights, session_status, active, created_date, creadted_by) VALUES ('${Name}', '${Email}', '${PhoneNo}', '${Password}', '${AuthorityRights}', '1', ${Active}, GETDATE(), 'Admin')`;
             await sql.query(query);
             res.status(200).json({ message: 'Authentication inserted successfully' });
         } catch (error) {

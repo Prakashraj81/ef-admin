@@ -2,5 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/admin/auth/register": "pages/admin/auth/register.js"
+  "/admin/auth/login": "pages/admin/auth/login.js",
+  "/enquiry/EnquiryDashborad": "pages/enquiry/EnquiryDashborad.js",
+  "/admin/Dashborad": "pages/admin/Dashborad.js"
 }

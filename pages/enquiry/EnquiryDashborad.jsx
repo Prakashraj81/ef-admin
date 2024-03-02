@@ -32,6 +32,7 @@ import Alert from '@mui/material/Alert';
 import Backdrop from '@mui/material/Backdrop';
 import BackdropLoader from '../../components/loader/backdrop-loader';
 import SuccessAlert from "../../components/alert/success-alert";
+import DeleteModal from "../../components/modal/delete-modal";
 
 export default function EnquiryDashborad() {
     let [Authkey, setAuthkey] = useState(0);
@@ -47,17 +48,6 @@ export default function EnquiryDashborad() {
       }
       setAuthkey(sessionValue);
     });
-
-
-    //Logout function
-    const Logout =()=> {
-        setShowLoader(true);
-        sessionStorage.setItem("Auth", "0");
-        sessionStorage.setItem("AuthRights", "");
-        router.push(`/admin/auth/login`);
-        setShowLoader(false);
-    }
-
 
   let [page, setPage] = React.useState(0);  
   let [SuccessMsg, setSuccessMsg] = React.useState(false);
@@ -80,6 +70,7 @@ export default function EnquiryDashborad() {
   let [ShowEmailInput, setShowEmailInput] = useState(true);
   let [ShowPhoneInput, setShowPhoneInput] = useState(true); 
   let [ShowIndustryOthers, setShowIndustryOthers] = useState(true);
+  let [DeleteModalOpen, setDeleteModalOpen] = React.useState(false);
 
     let EnquiryDateInput;
     let FirstNameInput;
@@ -312,14 +303,42 @@ export default function EnquiryDashborad() {
     }
 
   }
+
+  //Delete function
+  const DeleteModalFunction = (event) => {
+    let value = event.currentTarget.id;
+    if (value === "Yes") {
+        setDeleteModalOpen(false);
+        setShowLoader(true);
+        sessionStorage.setItem("Auth", "0");
+        sessionStorage.setItem("AuthRights", "");
+        router.push(`/admin/auth/login`);
+        setShowLoader(false);
+    }
+    else {
+        setShowLoader(true);
+        setDeleteModalOpen(false);
+        setShowLoader(false);
+    }
+  };
+
+  //Delete function
+  const LOGOUTFUNCTION = () => {
+    setDeleteModalOpen(true);
+  }
   
   return (
     <>
-    <>
-    {ShowLoader && (
-          <BackdropLoader ShowLoader={ShowLoader} />
-        )}
-      </>
+        <>
+            {ShowLoader && (
+            <BackdropLoader ShowLoader={ShowLoader} />
+            )}
+        </>
+        <>
+            {DeleteModalOpen && (
+            <DeleteModal DeleteModalOpen={DeleteModalOpen} DeleteModalFunction={DeleteModalFunction} />
+            )}
+        </>
       <div className="w-full inline-block px-20">       
       <DashboardCard sx={{ padding: "0px 50px" }}> 
       {SuccessMsg && (<SuccessAlert />)}      
@@ -534,7 +553,7 @@ export default function EnquiryDashborad() {
                 </DialogActions>     
                 <DialogActions className="float-right px-10">                
                     <button 
-                    onClick={Logout}                
+                    onClick={LOGOUTFUNCTION}                
                     className="px-5 py-1 bg-error-main text-white hover:bg-white border hover:border-error-main hover:text-error-main rounded-sm transition duration-300 delay-150">
                         Logout
                     </button>

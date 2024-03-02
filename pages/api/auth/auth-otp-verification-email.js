@@ -26,7 +26,7 @@ export default async (req, res) => {
         let otp = generateOTP();
         let email = req.body.Email;
         let phone_number = req.body.PhoneNo;
-        const query = `INSERT INTO auth_otp_table (name, email, phone_number, auth_otp, status, active, created_date, creadted_by) VALUES ('${Name}', '${email}', '${phone_number}', '${otp}', '1', 1, '${CurrentDate}', 'Admin')`;
+        const query = `INSERT INTO auth_otp_table (name, email, phone_number, auth_otp, status, active, created_date, creadted_by) VALUES ('${Name}', '${email}', '${phone_number}', '${otp}', '1', 1, GETDATE(), 'Admin')`;
         await sql.query(query);
 
         // Send OTP via email

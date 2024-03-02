@@ -5,30 +5,29 @@ export default async (req, res) => {
   try {
     await sql.connect(config);
     let result;
+    let result_1;
     if (EnterOTP !== "") {
       result = await sql.query`Select auth_otp from auth_otp_table where auth_otp=${EnterOTP}`;
-      let result_1 = await sql.query`DECLARE @InputOTP NVARCHAR(10) = ${EnterOTP};
-      DECLARE @ExpirationMinutes INT = 3;
-      
-      IF EXISTS (
-          SELECT auth_otp FROM auth_otp_table WHERE auth_otp = @InputOTP AND created_date >= DATEADD(MINUTE, -@ExpirationMinutes, GETDATE())
-      )
-      BEGIN
-          -- The OTP is valid
-          PRINT 'OTP is valid';
-      END
-      ELSE
-      BEGIN
-          -- The OTP has expired
-          PRINT 'OTP has expired';
-      END;`;
+      result_1 = await sql.query`
+      DECLARE @ExpirationDate DATETIME = DATEADD(MINUTE, -3, GETDATE());
+      SELECT
+          CASE
+              WHEN created_date >= @ExpirationDate THEN 'OTP is valid'
+              ELSE 'OTP has expired'
+          END AS otpStatus,
+          @ExpirationDate AS ExpirationDate,
+          GETDATE() AS CurrentDateTime,
+          created_date
+        FROM auth_otp_table where auth_otp = ${EnterOTP};
+      `;
     } else {
       result = await sql.query`Select * from auth_otp_table`;
     }
 
     if (result.recordset.length !== 0) {
       let user = result.recordset;
-      res.status(200).json({ user, message: "OTP Verified" });
+      let otpVerifyMsg = result_1.recordset;
+      res.status(200).json({ user, message: "OTP Verified", otpVerifyMsg });
     } else {
       res.status(200).json({ message: 'Invalid OTP' });
     }
