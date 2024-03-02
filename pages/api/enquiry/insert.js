@@ -7,12 +7,12 @@ export default async (req, res) => {
       await sql.connect(config);
       if(FullName !== "" && Email !== ""){
         if(Id !== 0){
-          await sql.query`Update EnquiryListMaster set Date=${EnquiryDate}, FullName=${FullName}, Email=${Email}, PhoneNo=${PhoneNo}, Message=${Message}, Active=${1}, Modified_Date=${EnquiryDate}, Modified_By=${"Admin"} where Id=${Id}`;        
+          await sql.query`Update enquiry_list_master set date=${EnquiryDate}, full_name=${FullName}, email=${Email}, phone_number=${PhoneNo}, message=${Message}, active=${1}, modified_date=${EnquiryDate}, modified_by=${"Admin"} where id=${Id}`;        
           res.status(200).json({ message: 'Enquiry updated successfully' });
         }
         else {
-          await sql.query`Insert into EnquiryListMaster (Date, FullName, Email, PhoneNo, Message, Status, Active, Created_Date, Creadted_By) 
-          values (${EnquiryDate}, ${FullName}, ${Email}, ${PhoneNo}, ${Message}, ${"1"}, ${1}, ${EnquiryDate}, ${"Admin"})`;
+          await sql.query`Insert into enquiry_list_master (date, full_name, email, phone_number, message, status, active, created_date, creadted_by) 
+          values (${EnquiryDate}, ${FullName}, ${Email}, ${PhoneNo}, ${Message}, ${"1"}, ${1}, GETDATE(), ${"Admin"})`;
          res.status(200).json({ message: 'Enquiry inserted successfully' });
         }     
       } 

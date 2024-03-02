@@ -2,7 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/admin/auth/login": "pages/admin/auth/login.js",
-  "/enquiry/EnquiryDashborad": "pages/enquiry/EnquiryDashborad.js",
-  "/admin/Dashborad": "pages/admin/Dashborad.js"
+  "/": "pages/index.js",
+  "/api/customer-enquiry/insert": "pages/api/customer-enquiry/insert.js",
+  "/admin": "pages/admin.js",
+  "/enquiry/EnquiryDashborad": "pages/enquiry/EnquiryDashborad.js"
 }

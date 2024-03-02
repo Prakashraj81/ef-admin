@@ -33,7 +33,7 @@ export default async (req, res) => {
         const mailOptions = {
             from: 'kassaposprakash@gmail.com',
             to: 'aprakashraj81@gmail.com',
-            subject: 'Email OTP Verification',
+            subject: 'Eftapei OTP Verification',
             html: `<!DOCTYPE html>
             <html lang="en">
               <head>
@@ -61,7 +61,7 @@ export default async (req, res) => {
                     margin: 0 auto;
                     padding: 45px 30px 60px;
                     background: #f4f7ff;
-                    background-image: url(https://ef-admin-eight.vercel.app/about/bg-about.svg);
+                    background-image: url(/about/bg-about.svg);
                     background-repeat: no-repeat;
                     background-size: 800px 452px;
                     background-position: top center;
@@ -76,14 +76,14 @@ export default async (req, res) => {
                           <td>
                             <img
                               alt=""
-                              src="https://ef-admin-eight.vercel.app/logo/header-logo.jpg"
+                              src="/logo/header-logo.jpg"
                               height="30px"
                             />
                           </td>
                           <td style="text-align: right;">
                             <span
                               style="font-size: 16px; line-height: 30px; color: #ffffff;"
-                              >${CurrentDate}</span
+                              >Date: ${CurrentDate}</span
                             >
                           </td>
                         </tr>
@@ -121,7 +121,7 @@ export default async (req, res) => {
                             font-weight: 500;
                           "
                         >
-                          Hey Eftapei admin or emaployee,
+                          Hey Eftapei admin or employee,
                         </p>
                         <p
                           style="
@@ -134,7 +134,7 @@ export default async (req, res) => {
                           Thank you for choosing Eftapei Mind makeover. Use the following OTP
                           to complete the procedure to change your email address. OTP is
                           valid for
-                          <span style="font-weight: 600; color: #1f1f1f;">5 minutes</span>.
+                          <span style="font-weight: 600; color: #1f1f1f;">3 minutes</span>.
                           Do not share this code with others, including Eftapei
                           employees.
                         </p>
