@@ -1,4 +1,5 @@
 import { sql, config } from '/config';
+let dotenv = require('dotenv'); 
 import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
@@ -6,8 +7,8 @@ const transporter = nodemailer.createTransport({
     port: 587, // or 587 for TLS
     secure: false, // true for 465, false for other ports
     auth: {
-        user: 'kassaposprakash@gmail.com',
-        pass: 'xcbffvhzbbfcxrwc' //xcbf fvhz bbfc xrwc
+        user: process.env.OTP_EMAIL_USER,
+        pass: process.env.OTP_EMAIL_PWD //xcbf fvhz bbfc xrwc
     }
 });
 transporter.verify((error, success) => {
@@ -79,17 +80,16 @@ export default async (req, res) => {
                 <tbody>
                   <tr style="height: 0;">
                     <td>
-                      <img
-                        alt=""
+                      <img                        
                         src="/logo/header-logo.jpg"
-                        height="30px"
+                        alt="logo"
+                        style="height=30px;"
                       />
                     </td>
                     <td style="text-align: right;">
-                      <span
-                        style="font-size: 16px; line-height: 30px; color: #ffffff;"
-                        >Date: ${EnquiryDateInput}</span
-                      >
+                      <span style="font-size: 16px; line-height: 30px; color: #ffffff;">
+                        Date: ${EnquiryDateInput}
+                      </span>
                     </td>
                   </tr>
                 </tbody>
