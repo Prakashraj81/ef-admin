@@ -76,7 +76,7 @@ const GetServiceCount = async () => {
     GetEventsCount(); 
     GetEnquiryCount();
     GetServiceCount(); 
-  }, []);
+  }, [TotalUsers, TotalEvents, TotalEnquiry, TotalServices]);
 
     return (
         <Box>

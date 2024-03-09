@@ -132,6 +132,7 @@ const AdminRegister = () => {
         isSumbitDisabled = true;
         setAuthorityRightsError(true);
       }      
+      isEmailValid(Email);
     //Api setup (OTP verification)
     if (isSumbitDisabled !== true) {
         try {
@@ -158,6 +159,33 @@ const AdminRegister = () => {
         setShowLoader(false);
     }
   };
+
+
+  const isEmailValid = async(Email) => {
+    try {
+      const response = await axios.get(`https://api.trumail.io/v2/lookups/json?email=${Email}`);
+      const data = response.data;      
+      isSumbitDisabled = true;
+      setisSumbitDisabled(true);
+      return data.deliverable;
+    } catch (error) {
+      throw error;
+    }
+  }
+  
+  // const emailToCheck = Email;
+  // isEmailValid(emailToCheck)
+  //   .then((isValid) => {
+  //     if (isValid) {
+  //       console.log('Email is valid.');
+  //     } else {
+  //       console.log('Email is not valid or not deliverable.');
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     console.error('Error checking email validity:', error);
+  //   });
+  
   
 
   return (

@@ -339,18 +339,18 @@ export default function EnquiryDashborad() {
             <DeleteModal DeleteModalOpen={DeleteModalOpen} DeleteModalFunction={DeleteModalFunction} />
             )}
         </>
-      <div className="w-full inline-block px-20">       
+      <div className="w-full inline-block px-0 lg:px-20">       
       <DashboardCard sx={{ padding: "0px 50px" }}> 
       {SuccessMsg && (<SuccessAlert />)}      
         <Box>            
-            <div className="w-full inline-block px-10">
-                <div className="w-4/12 inline-block float-left mb-7">
+            <div className="w-full inline-block md:flex md:items-center md:justify-start px-0 lg:px-10">
+                <div className="w-full md:w-4/12 lg:w-4/12 md:mr-2 inline-block float-left mb-3 md:mb-5 lg:mb-7">
                     <Typography  variant="subtitle1" fontWeight={600} component="label" htmlFor="EnquiryDate" mb="5px">
                         Enquiry date
                     </Typography>
                     <CustomTextField type="date" id="EnquiryDate" variant="outlined" fullWidth />                
                 </div>
-                <div className="w-4/12 inline-block float-left px-2 mb-7">
+                <div className="w-full md:w-4/12 lg:w-4/12 md:mr-2 inline-block float-left mb-3 md:mb-5 lg:mb-7">
                     <Typography  variant="subtitle1" fontWeight={600} component="label" htmlFor="FirstName" mb="5px">
                         First name<i className="text-red">*</i>
                     </Typography>
@@ -359,7 +359,7 @@ export default function EnquiryDashborad() {
                         <p className="text-red" role="alert">This field required</p>
                     )}            
                 </div>    
-                <div className="w-4/12 inline-block float-left px-2 mb-7">
+                <div className="w-full md:w-4/12 lg:w-4/12 md:mr-2 inline-block float-left mb-3 md:mb-5 lg:mb-7">
                     <Typography  variant="subtitle1" fontWeight={600} component="label" htmlFor="LastName" mb="5px">
                         Last name<i className="text-red">*</i>
                     </Typography>
@@ -370,8 +370,8 @@ export default function EnquiryDashborad() {
                 </div>                                                       
             </div>
             
-            <div className="w-full inline-block px-10">
-                <div className="w-4/12 inline-block float-left px-2 mb-7">
+            <div className="w-full inline-block md:flex md:items-center md:justify-start px-0 lg:px-10">
+                <div className="w-full md:w-4/12 lg:w-4/12 md:mr-2 inline-block float-left mb-3 md:mb-5 lg:mb-7">
                     <Typography  variant="subtitle1" fontWeight={600} component="label" htmlFor="EnquiryType" mb="5px">
                         Enquiry type<i className="text-red">*</i>
                     </Typography>
@@ -386,7 +386,7 @@ export default function EnquiryDashborad() {
                 </div>    
                 {ShowEmailInput &&(
                     <>
-                    <div className="w-4/12 inline-block float-left px-2 mb-7">
+                    <div className="w-full md:w-4/12 lg:w-4/12 md:mr-2 inline-block float-left mb-3 md:mb-5 lg:mb-7">
                         <Typography  variant="subtitle1" fontWeight={600} component="label" htmlFor="Email" mb="5px">
                             Email<i className="text-red">*</i>
                         </Typography>
@@ -399,7 +399,7 @@ export default function EnquiryDashborad() {
                 )}
                 {ShowPhoneInput &&(
                     <>
-                    <div className="w-4/12 inline-block float-left px-2 mb-7">
+                    <div className="w-full md:w-4/12 lg:w-4/12 md:mr-2 inline-block float-left mb-3 md:mb-5 lg:mb-7">
                         <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="PhoneNumber" mb="5px">
                             Phone number<i className="text-red">*</i>
                         </Typography>
@@ -412,8 +412,8 @@ export default function EnquiryDashborad() {
                 )}                
             </div>           
 
-            <div className="w-full inline-block px-10">
-                <div className="w-4/12 inline-block float-left px-2 mb-7">
+            <div className="w-full inline-block md:flex md:items-center md:justify-start px-0 lg:px-10">
+                <div className="w-full md:w-4/12 lg:w-4/12 md:mr-2 inline-block float-left mb-3 md:mb-5 lg:mb-7">
                     <Typography  variant="subtitle1" fontWeight={600} component="label" htmlFor="BusinessUnit" mb="5px">
                         Business unit<i className="text-red">*</i>
                     </Typography>
@@ -426,7 +426,7 @@ export default function EnquiryDashborad() {
                         <p className="text-red" role="alert">This field required</p>
                     )}  
                 </div>    
-                <div className="w-4/12 inline-block float-left px-2 mb-7">
+                <div className="w-full md:w-4/12 lg:w-4/12 md:mr-2 inline-block float-left mb-3 md:mb-5 lg:mb-7">
                     <Typography  variant="subtitle1" fontWeight={600} component="label" htmlFor="Address_1" mb="5px">
                         Address-1<i className="text-red">*</i>
                     </Typography>
@@ -435,7 +435,7 @@ export default function EnquiryDashborad() {
                         <p className="text-red" role="alert">This field required</p>
                     )}                
                 </div>       
-                <div className="w-4/12 inline-block float-left px-2 mb-7">
+                <div className="w-full md:w-4/12 lg:w-4/12 md:mr-2 inline-block float-left mb-3 md:mb-5 lg:mb-7">
                     <Typography  variant="subtitle1" fontWeight={600} component="label" htmlFor="Address_2" mb="5px">
                         Address-2
                     </Typography>
@@ -443,8 +443,8 @@ export default function EnquiryDashborad() {
                 </div>  
             </div>
 
-            <div className="w-full inline-block px-10">
-                <div className="w-4/12 inline-block float-left px-2 mb-7">
+            <div className="w-full inline-block md:flex md:items-center md:justify-start px-0 lg:px-10">
+                <div className="w-full md:w-4/12 lg:w-4/12 md:mr-2 inline-block float-left mb-3 md:mb-5 lg:mb-7">
                     <Typography  variant="subtitle1" fontWeight={600} component="label" htmlFor="City" mb="5px">
                         City
                     </Typography>
@@ -456,13 +456,13 @@ export default function EnquiryDashborad() {
                     </Typography>
                     <CustomTextField id="District" variant="outlined" fullWidth />                    
                 </div>  
-                <div className="w-4/12 inline-block float-left px-2 mb-7">
+                <div className="w-full md:w-4/12 lg:w-4/12 md:mr-2 inline-block float-left mb-3 md:mb-5 lg:mb-7">
                     <Typography  variant="subtitle1" fontWeight={600} component="label" htmlFor="Pincode" mb="5px">
                         Pincode
                     </Typography>
                     <CustomTextField id="Pincode" variant="outlined" fullWidth />                    
                 </div>    
-                <div className="w-4/12 inline-block float-left px-2 mb-7">
+                <div className="w-full md:w-4/12 lg:w-4/12 md:mr-2 inline-block float-left mb-3 md:mb-5 lg:mb-7">
                     <Typography  variant="subtitle1" fontWeight={600} component="label" htmlFor="State" mb="5px">
                         State
                     </Typography>
@@ -474,8 +474,8 @@ export default function EnquiryDashborad() {
                 </div>        
             </div>
 
-            <div className="w-full inline-block px-10">                   
-                <div className="w-4/12 inline-block float-left px-2 mb-7">
+            <div className="w-full inline-block md:flex md:items-center md:justify-start px-0 lg:px-10">                   
+                <div className="w-full md:w-4/12 lg:w-4/12 md:mr-2 inline-block float-left mb-3 md:mb-5 lg:mb-7">
                     <Typography  variant="subtitle1" fontWeight={600} component="label" htmlFor="Country" mb="5px">
                         Country
                     </Typography>
@@ -485,7 +485,7 @@ export default function EnquiryDashborad() {
                         <option value='Pakistan' id='Pakistan'>Pakistan</option>
                     </select>  
                 </div>    
-                <div className="w-4/12 inline-block float-left px-2 mb-7">
+                <div className="w-full md:w-4/12 lg:w-4/12 md:mr-2 inline-block float-left mb-3 md:mb-5 lg:mb-7">
                     <Typography  variant="subtitle1" fontWeight={600} component="label" htmlFor="Industry" mb="5px">
                         Industry<i className="text-red">*</i>
                     </Typography>
@@ -502,7 +502,7 @@ export default function EnquiryDashborad() {
 
                 {ShowIndustryOthers &&(
                     <>
-                    <div className="w-4/12 inline-block float-left px-2 mb-7">
+                    <div className="w-full md:w-4/12 lg:w-4/12 md:mr-2 inline-block float-left mb-3 md:mb-5 lg:mb-7">
                         <Typography  variant="subtitle1" fontWeight={600} component="label" htmlFor="IndustryOthers" mb="5px">
                             Industry (Others)
                         </Typography>
@@ -516,8 +516,8 @@ export default function EnquiryDashborad() {
             </div>
 
            
-            <div className="w-full inline-block px-10">
-                <div className="w-4/12 inline-block float-left px-2 mb-7">
+            <div className="w-full inline-block md:flex md:items-center md:justify-start px-0 lg:px-10">
+                <div className="w-full md:w-4/12 lg:w-4/12 md:mr-2 inline-block float-left mb-3 md:mb-5 lg:mb-7">
                     <Typography  variant="subtitle1" fontWeight={600} component="label" htmlFor="JobLevel" mb="5px">
                         Job level<i className="text-red">*</i>
                     </Typography>
@@ -532,7 +532,7 @@ export default function EnquiryDashborad() {
                     )}  
                 </div>    
                     
-                <div className="w-4/12 inline-block float-left px-2 mb-7">
+                <div className="w-full md:w-4/12 lg:w-4/12 md:mr-2 inline-block float-left mb-3 md:mb-5 lg:mb-7">
                     <Typography  variant="subtitle1" fontWeight={600} component="label" htmlFor="JobTitle" mb="5px">
                         Job title
                     </Typography>
@@ -540,7 +540,7 @@ export default function EnquiryDashborad() {
                 </div> 
             </div>
             <div className="w-full inline-block">
-                <DialogActions className="float-left px-10">
+                <DialogActions className="float-left px-0 md:px-5 lg:px-10">
                     <button                 
                     className="px-5 py-1 bg-error-main text-white hover:bg-white border hover:border-error-main hover:text-error-main rounded-sm transition duration-300 delay-150">
                         Cancel
@@ -551,7 +551,7 @@ export default function EnquiryDashborad() {
                         Submit
                     </button>
                 </DialogActions>     
-                <DialogActions className="float-right px-10">                
+                <DialogActions className="float-right px-0 md:px-5 lg:px-10">                
                     <button 
                     onClick={LOGOUTFUNCTION}                
                     className="px-5 py-1 bg-error-main text-white hover:bg-white border hover:border-error-main hover:text-error-main rounded-sm transition duration-300 delay-150">
