@@ -7,7 +7,7 @@ export default async (req, res) => {
       await sql.connect(config);
       if(FullName !== "" && Email !== ""){
         if(Id !== 0){
-          await sql.query`Update enquiry_list_master set date=${EnquiryDate}, full_name=${FullName}, email=${Email}, phone_number=${PhoneNo}, message=${Message}, active=${1}, modified_date=${EnquiryDate}, modified_by=${"Admin"} where id=${Id}`;        
+          await sql.query`Update enquiry_list_master set date=${EnquiryDate}, full_name=${FullName}, email=${Email}, phone_number=${PhoneNo}, message=${Message}, active=${1}, modified_date=GETDATE(), modified_by=${"Admin"} where id=${Id}`;        
           res.status(200).json({ message: 'Enquiry updated successfully' });
         }
         else {

@@ -6,7 +6,7 @@ export default async (req, res) => {
     await sql.connect(config);
     let result;
     if (Id !== 0) {
-      result = await sql.query`Select * from enquiry_list_master where Id=${Id}`;
+      result = await sql.query`Select * from enquiry_list_master where id=${Id}`;
     } else {
       result = await sql.query`Select * from enquiry_list_master`;
     }
